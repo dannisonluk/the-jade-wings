@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 // components/home/Features.tsx
 export default function Features() {
 	return (
@@ -29,12 +31,12 @@ export default function Features() {
 							Check your next flight&apos;s aircraft type, seat
 							configuration, and amenities
 						</p>
-						<a
-							href="#flight-lookup"
+						<Link
+							href="/aircraft_type"
 							className="text-green-600 hover:underline font-medium"
 						>
 							Search Flights
-						</a>
+						</Link>
 					</div>
 
 					{/* Fleet Explorer Feature */}
@@ -49,12 +51,32 @@ export default function Features() {
 							Discover Cathay Pacific&apos;s entire fleet with
 							detailed specs and seat maps
 						</p>
-						<a
-							href="#fleet"
+						<Link
+							href="/fleet"
 							className="text-green-600 hover:underline font-medium"
 						>
 							View Fleet
-						</a>
+						</Link>
+					</div>
+
+					{/* Flight Schedule Feature */}
+					<div className="text-center p-6 rounded-lg hover:shadow-lg transition-shadow">
+						<div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+							<span className="text-2xl">📅</span>
+						</div>
+						<h3 className="text-xl font-bold mb-2">
+							Flight Schedule
+						</h3>
+						<p className="text-gray-600 mb-4">
+							View real-time flight schedules, search routes, and
+							track departures and arrivals
+						</p>
+						<Link
+							href="/schedule"
+							className="text-green-600 hover:underline font-medium"
+						>
+							View Schedule
+						</Link>
 					</div>
 
 					{/* Route Map Feature */}
@@ -69,12 +91,12 @@ export default function Features() {
 							Explore Cathay Pacific&apos;s global coverage and
 							discover new destinations
 						</p>
-						<a
-							href="#routes"
+						<Link
+							href="/routes"
 							className="text-green-600 hover:underline font-medium"
 						>
 							Explore Routes
-						</a>
+						</Link>
 					</div>
 
 					{/* Lounge Guide Feature */}
@@ -87,12 +109,12 @@ export default function Features() {
 							Complete guide to Cathay Pacific lounges worldwide
 							with amenities and access
 						</p>
-						<a
-							href="#lounges"
+						<Link
+							href="/lounges"
 							className="text-green-600 hover:underline font-medium"
 						>
 							View Lounges
-						</a>
+						</Link>
 					</div>
 
 					{/* Flight Tracker Feature */}
@@ -107,12 +129,12 @@ export default function Features() {
 							Track any Cathay Pacific flight in real-time with
 							live updates
 						</p>
-						<a
-							href="#tracker"
+						<Link
+							href="/tracker"
 							className="text-green-600 hover:underline font-medium"
 						>
 							Track Flights
-						</a>
+						</Link>
 					</div>
 
 					{/* Community Forum Feature */}
@@ -127,12 +149,12 @@ export default function Features() {
 							Share experiences, tips, and connect with fellow
 							Cathay Pacific enthusiasts
 						</p>
-						<a
-							href="#forum"
+						<Link
+							href="/forum"
 							className="text-green-600 hover:underline font-medium"
 						>
 							Join Community
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>
