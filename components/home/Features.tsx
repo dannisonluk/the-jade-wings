@@ -32,7 +32,7 @@ export default function Features() {
 							configuration, and amenities
 						</p>
 						<Link
-							href="/aircraft_type"
+							href="/flight_search"
 							className="text-green-600 hover:underline font-medium"
 						>
 							Search Flights
@@ -68,8 +68,7 @@ export default function Features() {
 							Flight Schedule
 						</h3>
 						<p className="text-gray-600 mb-4">
-							View real-time flight schedules, search routes, and
-							track departures and arrivals
+							View weekly schedules for all Cathay Pacific flights
 						</p>
 						<Link
 							href="/schedule"
