@@ -279,7 +279,7 @@ export default function FlightSearchPage() {
         {/* Hero */}
         <div className="relative overflow-hidden rounded-3xl border bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-xl">
           <div className="relative p-6 md:p-10">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div className="flex items-center gap-4">
                 <div className="p-3 rounded-2xl bg-white/15 backdrop-blur">
                   <PaperAirplaneIcon className="h-8 w-8" />
@@ -288,8 +288,8 @@ export default function FlightSearchPage() {
                   <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
                     Flight Explorer
                   </h1>
-                  <p className="text-white/90">
-                    Search flight history and performance at a glance.
+                   <p className="text-white/90 text-sm mt-1">
+                    Search flight history and performance
                   </p>
                 </div>
               </div>
@@ -299,7 +299,7 @@ export default function FlightSearchPage() {
                   <div className="flex items-center gap-2">
                     <MagnifyingGlassIcon className="h-5 w-5 text-white/80 ml-2" />
                     <Input
-                      placeholder="Enter flight number (e.g., CX506)"
+                      placeholder="Enter flight number"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value.toUpperCase())}
                       onKeyPress={handleKeyPress}
@@ -326,6 +326,7 @@ export default function FlightSearchPage() {
                     </button>
                   ))}
                   <span className="px-2 py-1 rounded-lg bg-white/10">Press Enter ↵</span>
+                  <span className="px-2 py-1 rounded-lg bg-white/10">Only Japan routes are supported currently</span>
                 </div>
               </div>
             </div>

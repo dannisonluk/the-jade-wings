@@ -161,7 +161,7 @@ export async function GET(
 		const flightNumber = flightNumberRaw.toUpperCase();
 
 		// Define the airports to search (excluding HKG)
-		const airports: string[] = ["KIX"]; // Add all your non-HKG ports
+		const airports: string[] = ["KIX", "NGO", "FUK", "NRT", "HND", "CTS"]; // Add all your non-HKG ports
 
 		const flightData: FlightData[] = [];
 
