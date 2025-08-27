@@ -25,11 +25,11 @@ type ExcelRowArray = ExcelCellValue[];
 function excelTimeToHHMM(excelTime: ExcelCellValue): string {
 	if (
 		!excelTime ||
-		excelTime === "—" ||
+		excelTime === "--" ||
 		excelTime === "-" ||
 		excelTime === ""
 	)
-		return "—";
+		return "--";
 
 	// If it's already a string in correct format
 	if (typeof excelTime === "string") {
@@ -96,7 +96,7 @@ function excelTimeToHHMM(excelTime: ExcelCellValue): string {
 			.padStart(2, "0")}`;
 	}
 
-	return "—";
+	return "--";
 }
 
 // Helper function to format date
@@ -142,35 +142,26 @@ function formatExcelDate(dateValue: ExcelCellValue): string {
 
 // Helper function to safely convert to string
 function safeToString(value: ExcelCellValue): string {
-	if (value === null || value === undefined) return "—";
+	if (value === null || value === undefined) return "--";
 	if (typeof value === "boolean") return value ? "Yes" : "No";
 	return String(value);
 }
 
-interface RouteParams {
-	params: {
-		flightNumber: string;
-	};
-}
+// Option B: params may be a Promise, so allow both and await when used
+type ParamsOrPromise =
+	| { flightNumber: string }
+	| Promise<{ flightNumber: string }>;
 
 export async function GET(
 	request: NextRequest,
-	{ params }: RouteParams
+	context: { params: Promise<ParamsOrPromise> }
 ): Promise<NextResponse> {
 	try {
-		const flightNumber = params.flightNumber.toUpperCase();
+		const { flightNumber: flightNumberRaw } = await context.params;
+		const flightNumber = flightNumberRaw.toUpperCase();
 
 		// Define the airports to search (excluding HKG)
-		const airports: string[] = [
-			"TPE",
-			"KIX",
-			"NRT",
-			"ICN",
-			"PVG",
-			"PEK",
-			"BKK",
-			"SIN",
-		]; // Add all your non-HKG ports
+		const airports: string[] = ["KIX"]; // Add all your non-HKG ports
 
 		const flightData: FlightData[] = [];
 
@@ -204,7 +195,7 @@ export async function GET(
 						worksheet,
 						{
 							header: 1,
-							defval: "—",
+							defval: "--",
 							raw: false,
 							dateNF: "yyyy-mm-dd",
 						}
