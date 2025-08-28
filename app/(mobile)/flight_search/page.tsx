@@ -283,7 +283,7 @@ export default function FlightSearchPage() {
 	);
 
 	return (
-		<div className="min-h-screen bg-gradient-to-b from-[#EAF5F2] via-[#FFFFFF] to-[#F7F4EE]">
+		<div className="bg-gradient-to-b from-[#EAF5F2] via-[#FFFFFF] to-[#F7F4EE]">
 			<div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-8">
 				{/* Hero */}
 				<div className="relative overflow-hidden rounded-xl border border-[#DADDE1] bg-[#FFFFFF] shadow-sm">

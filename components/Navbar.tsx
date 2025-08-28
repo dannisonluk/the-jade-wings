@@ -9,7 +9,6 @@ import {
 	XMarkIcon,
 	ChevronRightIcon,
 	ArrowTopRightOnSquareIcon,
-	UserCircleIcon,
 	ExclamationCircleIcon,
 } from "@heroicons/react/24/outline";
 
@@ -61,7 +60,7 @@ const NAV_ITEMS: NavItem[] = [
 		children: [
 			{
 				label: "Explore Routes",
-				href: "/routes",
+				href: "/under_development",
 				description: "Discover global coverage and destinations",
 			},
 		],
@@ -144,12 +143,12 @@ export default function NavBar() {
 
 					<Link
 						href="/"
-						className="flex items-center gap-2 text-slate-900"
+						className="flex items-end gap-2 text-slate-900"
 						aria-label="Home"
 					>
 						<WingLogo />
-						<span className="hidden text-sm font-semibold tracking-wide sm:inline">
-							Cathay Tracker
+						<span className="text-md font-semibold tracking-wide sm:inline self-end">
+							Unofficial Cathay App
 						</span>
 					</Link>
 

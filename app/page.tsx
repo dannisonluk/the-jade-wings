@@ -9,22 +9,22 @@ export default async function Home() {
 	const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(userAgent);
 
 	if (isMobile) {
-		// Mobile homepage uses NavBar/Footer, even though we’re in the no-chrome group
 		return (
-			<>
+			<div className="min-h-screen flex flex-col">
 				<NavBar />
-				<main className="min-h-screen">
+				<main className="flex-1">
 					<MobileHome />
 				</main>
 				<Footer />
-			</>
+			</div>
 		);
 	}
 
-	// Desktop homepage: PcHome with no NavBar/Footer
 	return (
-		<main className="min-h-screen">
-			<PcHome />
-		</main>
+		<div className="min-h-screen flex flex-col">
+			<main className="flex-1">
+				<PcHome />
+			</main>
+		</div>
 	);
 }
