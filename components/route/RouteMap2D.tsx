@@ -196,7 +196,7 @@ export default function RouteMap() {
 			zoomSettings={{
 				enable: true,
 				minZoom: 1,
-				maxZoom: 25,
+				maxZoom: 50,
 				zoomFactor: 1,
 				mouseWheelZoom: true,
 				pinchZooming: true,
