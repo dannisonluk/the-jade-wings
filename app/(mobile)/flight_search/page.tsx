@@ -377,7 +377,7 @@ export default function FlightSearchPage() {
 						{/* Summary */}
 						<Card className="shadow-sm border border-[#DADDE1] overflow-hidden gap-0 py-0">
 							<div className="p-5 bg-gradient-to-r from-[#EAF5F2] to-[#FFFFFF]">
-								<div className="flex items-center justify-between">
+								<div className="flex items-center justify-between mb-2">
 									<div className="flex items-center gap-2.5">
 										<div className="p-2 bg-[#FFFFFF] border border-[#DADDE1] rounded-md">
 											<PaperAirplaneIcon className="h-5 w-5 text-[#0F7A6C]" />
@@ -577,7 +577,7 @@ export default function FlightSearchPage() {
 									<div className="min-w-[880px]">
 										<Table>
 											<TableHeader>
-												<TableRow className="bg-[#FFFFFF] sticky top-0 z-10 border-b border-[#DADDE1]">
+												<TableRow className="bg-[#FFFFFF] sticky top-0 border-b border-[#DADDE1]">
 													<TableHead className="py-2.5 pl-5 text-[#374151] font-medium">
 														Date
 													</TableHead>
@@ -784,7 +784,7 @@ export default function FlightSearchPage() {
 						)}
 
 						{/* Column guide */}
-						<div className="fixed bottom-5 right-5 z-50">
+						<div className="fixed bottom-5 right-5 z-1000000001">
 							<div className="relative">
 								{showHelp && (
 									<div className="absolute bottom-14 right-0 w-72 bg-[#FFFFFF] rounded-md shadow-lg border border-[#DADDE1] p-3 mb-2">

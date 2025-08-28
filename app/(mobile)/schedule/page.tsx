@@ -163,8 +163,8 @@ export default function SchedulePage() {
 	};
 
 	return (
-		<main className="min-h-screen">
-			<div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+		<main className="min-h-screen bg-whtie">
+			<div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 bg-white">
 				{/* Header */}
 				<header className="py-8 sm:py-10 lg:py-12 text-center">
 					<h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
@@ -300,7 +300,7 @@ export default function SchedulePage() {
 						className="w-full flex justify-between items-center bg-emerald-50 text-emerald-800 px-4 py-2 rounded-lg border border-emerald-100 shadow-sm"
 						onClick={() => setShowAdvanced((s) => !s)}
 					>
-						<span className="font-medium">Advanced filters</span>
+						<span className="font-medium">Advanced Filters</span>
 						{showAdvanced ? (
 							<ChevronUpIcon className="h-5 w-5" />
 						) : (
@@ -319,7 +319,7 @@ export default function SchedulePage() {
 							<div className="p-4 sm:p-6">
 								<div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 									{/* Times */}
-									<div className="grid grid-cols-2 gap-4 sm:col-span-1">
+									{/* <div className="grid grid-cols-2 gap-4 sm:col-span-1">
 										<div>
 											<label className="block text-sm font-medium text-slate-700">
 												Departure Time
@@ -354,7 +354,7 @@ export default function SchedulePage() {
 												className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
 											/>
 										</div>
-									</div>
+									</div> */}
 
 									{/* Operating days */}
 									<div className="sm:col-span-2">

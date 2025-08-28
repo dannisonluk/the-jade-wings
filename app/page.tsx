@@ -12,7 +12,7 @@ export default async function Home() {
 		return (
 			<div className="min-h-screen flex flex-col">
 				<NavBar />
-				<main className="flex-1">
+				<main className="flex-1 z-1000000000">
 					<MobileHome />
 				</main>
 				<Footer />
@@ -22,7 +22,7 @@ export default async function Home() {
 
 	return (
 		<div className="min-h-screen flex flex-col">
-			<main className="flex-1">
+			<main className="flex-1 z-1000000000">
 				<PcHome />
 			</main>
 		</div>

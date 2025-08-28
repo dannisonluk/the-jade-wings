@@ -9,7 +9,7 @@ export default function MobileLayout({
 	return (
 		<div className="min-h-screen flex flex-col">
 			<NavBar />
-			<main className="flex-1">{children}</main>
+			<main className="flex-1 z-1000000000">{children}</main>
 			<Footer />
 		</div>
 	);

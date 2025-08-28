@@ -120,7 +120,7 @@ export default function FleetPage() {
 		filters.registration !== "";
 
 	return (
-		<div className="p-4 sm:p-6 max-w-6xl mx-auto">
+		<div className="p-4 sm:p-6 max-w-6xl mx-auto bg-white">
 			{/* Page Header */}
 			<header className="mb-6 sm:mb-8 text-center">
 				<h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-emerald-600 mb-2">
@@ -141,7 +141,7 @@ export default function FleetPage() {
 
 			{/* Filters Section - Collapsible on Mobile */}
 			<section className="mb-4 sm:mb-6 bg-white p-4 sm:p-6 rounded-lg shadow-md border border-gray-200">
-				<div className="flex items-center justify-between mb-4">
+				<div className="flex items-center justify-between">
 					<h2 className="text-lg sm:text-xl font-semibold text-emerald-600">
 						Filters
 						{hasActiveFilters && (

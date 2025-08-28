@@ -60,7 +60,7 @@ const NAV_ITEMS: NavItem[] = [
 		children: [
 			{
 				label: "Explore Routes",
-				href: "/under_development",
+				href: "/route/2d_map",
 				description: "Discover global coverage and destinations",
 			},
 		],
@@ -128,7 +128,7 @@ export default function NavBar() {
 	return (
 		<>
 			{/* Top bar */}
-			<header className="sticky top-0 z-50 h-14 border-b border-slate-200 bg-[#f7f6f2]">
+			<header className="sticky top-0 h-14 border-b border-slate-200 bg-[#f7f6f2] z-1000000002">
 				<div className="mx-auto flex h-full max-w-6xl items-center justify-between px-3">
 					<button
 						ref={menuButtonRef}
@@ -164,7 +164,7 @@ export default function NavBar() {
 
 			{/* Backdrop */}
 			<div
-				className={`fixed inset-0 z-40 bg-black/40 transition-opacity ${
+				className={`fixed inset-0 z-1000000002 bg-black/40 transition-opacity ${
 					open ? "opacity-100" : "pointer-events-none opacity-0"
 				}`}
 				aria-hidden={!open}
@@ -176,9 +176,9 @@ export default function NavBar() {
 				role="dialog"
 				aria-modal="true"
 				aria-label="Main menu"
-				className={`fixed inset-y-0 left-0 z-50 flex w-[92vw] max-w-sm transform flex-col bg-white shadow-xl transition-transform duration-300 ${
+				className={`fixed inset-y-0 left-0 flex w-[92vw] max-w-sm transform flex-col bg-white shadow-xl transition-transform duration-300 ${
 					open ? "translate-x-0" : "-translate-x-full"
-				}`}
+				} z-1000000002`}
 			>
 				{/* Hero with image */}
 				<div className="relative h-40 shrink-0">

@@ -17,9 +17,9 @@ export default function HeroSection() {
 					objectFit: "cover",
 				}}
 			/>
-			<div className="relative z-10 text-white flex flex-col justify-end h-full">
+			<div className="relative text-white flex flex-col justify-end h-full">
 				{/* Headline */}
-				<h3 className="text-2xl md:text-5xl font-bold mb-4">
+				<h3 className="text-2xl md:text-5xl font-bold mb-4 z-1000000001">
 					Your Cathay Companion: Information at Your Fingertips
 				</h3>
 			</div>

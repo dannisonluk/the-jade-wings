@@ -53,9 +53,9 @@ export default function Features() {
 					/>
 
 					<FeatureCard
-						href="/routes"
+						href="/route/2d_map"
 						title="Route Network"
-						body="Explore Cathay Pacific’s global coverage with interactive 3D map"
+						body="Explore Cathay Pacific’s full global coverage"
 						img={{
 							src: "/images/features/routes.png",
 							alt: "World map with routes",
@@ -93,9 +93,7 @@ function FeatureCard({
 	img?: { src: string; alt: string };
 	chipTone?: string;
 }) {
-	const isComingSoon =
-		title.trim().toLowerCase() === "lounge guide" ||
-		title.trim().toLowerCase() === "route network";
+	const isComingSoon = title.trim().toLowerCase() === "lounge guide";
 
 	const CardInner = (
 		<>
