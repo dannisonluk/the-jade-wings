@@ -149,7 +149,7 @@ export default function NavBar() {
 					>
 						<WingLogo />
 						<span className="hidden text-sm font-semibold tracking-wide sm:inline">
-							Cathay Fan
+							Cathay Tracker
 						</span>
 					</Link>
 
@@ -187,7 +187,7 @@ export default function NavBar() {
              Add the domain to next.config.js images.domains if remote. */}
 					<Image
 						src="/images/background/fleet_on_ground.webp"
-						alt="Cathay fan banner"
+						alt="Cathay Tracker banner"
 						fill
 						priority
 						className="object-cover"
