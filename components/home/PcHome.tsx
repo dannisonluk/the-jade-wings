@@ -6,7 +6,7 @@ export default function PcHome() {
 	return (
 		<div className="bg-gray-50 min-h-screen flex flex-col items-center justify-center">
 			{/* Hero Image */}
-			<div className="relative w-full max-w-7xl">
+			<div className="relative w-full max-w-4xl mt-8">
 				<Image
 					src="/images/background/a350_over_the_sky.jpg" // Replace with your image path
 					alt="Airplane in the sky"
