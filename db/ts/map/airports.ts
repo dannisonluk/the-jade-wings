@@ -13,7 +13,7 @@ export const airports: Airport[] = [
 		code: "HKG",
 		name: "Hong Kong Intl",
 		city: "Hong Kong",
-		country: "China",
+		country: "Hong Kong",
 		lat: 22.308,
 		lon: 113.9185,
 	},

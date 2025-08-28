@@ -40,6 +40,7 @@ const COUNTRY_TO_ISO2: Record<string, string> = {
 	India: "in",
 	Indonesia: "id",
 	Japan: "jp",
+	"Hong Kong": "hk",
 	Philippines: "ph",
 	Vietnam: "vn",
 	"South Korea": "kr",
