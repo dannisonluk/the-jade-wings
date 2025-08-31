@@ -182,7 +182,7 @@ export default function LoungesPage() {
 										Lounge access
 									</span>{" "}
 									is determined by various factors such as
-									ticket class, frequent flyer status, and
+									ticket class, frequent flyer status and
 									alliances.
 								</p>
 								<p className="mt-1 text-xs inline-flex gap-1 text-[#0fa39a] font-medium">

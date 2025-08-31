@@ -24,7 +24,7 @@ export default function AboutPage() {
 					<p className="text-gray-700 leading-relaxed">
 						This website is a passion project designed to make it
 						easier to explore flights, aircraft, routes and related
-						information. It is not affiliated with, endorsed by, or
+						information. It is not affiliated with, endorsed by or
 						operated by Cathay Pacific or any airline or airport
 						authority.
 					</p>
@@ -38,7 +38,7 @@ export default function AboutPage() {
 					<p className="text-gray-700 leading-relaxed">
 						This is a non‑official, non‑profit application. It
 						exists solely for educational and informational purposes
-						and does not sell products, services, or memberships.
+						and does not sell products, services or memberships.
 					</p>
 				</article>
 
@@ -81,8 +81,8 @@ export default function AboutPage() {
 					<p className="text-gray-700 leading-relaxed">
 						While we aim to present helpful and accurate
 						information, data can change rapidly and may be
-						incomplete, incorrect, or outdated. The website owner makes
-						no warranties regarding accuracy, reliability, or
+						incomplete, incorrect or outdated. The website owner
+						makes no warranties regarding accuracy, reliability or
 						availability.
 					</p>
 					<p className="text-gray-700 leading-relaxed">
@@ -99,7 +99,7 @@ export default function AboutPage() {
 					</h2>
 					<p className="text-gray-700 leading-relaxed">
 						The owner is not responsible for errors, omissions,
-						delays, or actions taken based on the information
+						delays or actions taken based on the information
 						provided. Always verify details with official airline
 						channels before making travel decisions.
 					</p>
@@ -120,7 +120,7 @@ export default function AboutPage() {
 				{/* Last updated */}
 				<div className="pt-2 border-t border-gray-200">
 					<p className="text-sm text-gray-500">
-						Last updated: {new Date().toLocaleDateString()}
+						Last updated: 31 August 2025
 					</p>
 				</div>
 			</section>
