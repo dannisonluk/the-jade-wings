@@ -33,16 +33,6 @@ export default function Features() {
 					/>
 
 					<FeatureCard
-						href="/fleet"
-						title="Fleet Explorer"
-						body="Discover Cathay Pacific’s entire fleet with detailed specs and seat maps"
-						img={{
-							src: "/images/features/fleet.webp",
-							alt: "Cathay aircraft parked at gate",
-						}}
-					/>
-
-					<FeatureCard
 						href="/schedule"
 						title="Flight Schedule"
 						body="View weekly schedules for all Cathay Pacific flights"
@@ -71,6 +61,16 @@ export default function Features() {
 							alt: "Premium lounge interior",
 						}}
 					/>
+
+					<FeatureCard
+						href="/fleet"
+						title="Fleet Explorer"
+						body="Discover Cathay Pacific’s entire fleet with detailed specs and seat maps"
+						img={{
+							src: "/images/features/fleet.webp",
+							alt: "Cathay aircraft parked at gate",
+						}}
+					/>
 				</div>
 			</div>
 		</section>
@@ -93,7 +93,8 @@ function FeatureCard({
 	img?: { src: string; alt: string };
 	chipTone?: string;
 }) {
-	const isComingSoon = title.trim().toLowerCase() === "lounge guide";
+	// const isComingSoon = title.trim().toLowerCase() === "lounge guide";
+	const isComingSoon = false; // Disable "coming soon" for now
 
 	const CardInner = (
 		<>

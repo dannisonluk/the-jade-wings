@@ -25,43 +25,43 @@ type NavItem =
 const NAV_ITEMS: NavItem[] = [
 	{ label: "Home", href: "/" },
 	{
-		label: "Flight Lookup",
+		label: "Flight Related",
 		children: [
 			{
-				label: "Search Flights",
+				label: "Flight Schedule",
+				href: "/schedule",
+				description: "Weekly schedules for all flights",
+			},
+			{
+				label: "Flight History",
 				href: "/flight_search",
 				description:
 					"Check aircraft type, flight history and on-time performance",
 			},
+			{
+				label: "Route Network",
+				href: "/route/2d_map",
+				description: "Discover global coverage and destinations",
+			},
 		],
 	},
 	{
-		label: "Fleet Explorer",
+		label: "Services and Amenities",
+		children: [
+			{
+				label: "Lounge Guide",
+				href: "/lounge",
+				description: "Get the most out of your lounge visit",
+			},
+		],
+	},
+	{
+		label: "Fleet",
 		children: [
 			{
 				label: "View Fleet",
 				href: "/fleet",
 				description: "Explore Cathay's specs and configurations",
-			},
-		],
-	},
-	{
-		label: "Flight Schedule",
-		children: [
-			{
-				label: "View Schedule",
-				href: "/schedule",
-				description: "Weekly schedules for all flights",
-			},
-		],
-	},
-	{
-		label: "Route Network",
-		children: [
-			{
-				label: "Explore Routes",
-				href: "/route/2d_map",
-				description: "Discover global coverage and destinations",
 			},
 		],
 	},
@@ -176,7 +176,7 @@ export default function NavBar() {
 				role="dialog"
 				aria-modal="true"
 				aria-label="Main menu"
-				className={`fixed inset-y-0 left-0 flex w-[92vw] max-w-sm transform flex-col bg-white shadow-xl transition-transform duration-300 ${
+				className={`fixed inset-y-0 left-0 flex w-[92vw] max-w-sm transform flex-col bg-[#f6f7f2] shadow-xl transition-transform duration-300 ${
 					open ? "translate-x-0" : "-translate-x-full"
 				} z-1000000002`}
 			>
@@ -209,11 +209,11 @@ export default function NavBar() {
 					<ul className="divide-y divide-slate-200">
 						{NAV_ITEMS.map((item) => {
 							const isLink = "href" in item;
-							const active = isLink && pathname === item.href;
+							// const active = isLink && pathname === item.href;
 							return (
 								<li
 									key={item.label}
-									className="bg-white"
+									className="bg-[#f6f7f2]"
 								>
 									{isLink ? (
 										<Link
@@ -223,11 +223,7 @@ export default function NavBar() {
 													? "_blank"
 													: undefined
 											}
-											className={`flex items-center justify-between gap-2 px-5 py-4 text-[15px] font-semibold ${
-												active
-													? "text-emerald-700"
-													: "text-slate-900"
-											} hover:bg-slate-50`}
+											className={`flex items-center justify-between gap-2 px-5 py-4 text-[15px] font-semibold text-slate-800 hover:bg-slate-50`}
 										>
 											<span>{item.label}</span>
 											{item.external ? (
@@ -246,7 +242,7 @@ export default function NavBar() {
 												aria-controls={`sect-${slug(
 													item.label
 												)}`}
-												className="flex w-full items-center justify-between px-5 py-4 text-left text-[15px] font-semibold text-slate-900 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-600"
+												className="flex w-full items-center justify-between px-5 py-4 text-left text-[15px] font-semibold text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-600"
 											>
 												<span>{item.label}</span>
 												<ChevronRightIcon
@@ -279,7 +275,7 @@ export default function NavBar() {
 																}
 																className="block rounded-md px-5 py-3 hover:bg-slate-50"
 															>
-																<div className="text-[15px] font-semibold text-slate-900">
+																<div className="text-[15px] font-semibold text-[#004b47]">
 																	{c.label}
 																</div>
 																{c.description ? (
