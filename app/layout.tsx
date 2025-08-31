@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "Non-Official Cathay Pacific Fan Page",
-	description: "Explore Cathay Pacific like never before with our fan page.",
+	title: "Jade Wings",
+	description:
+		"Jadewings is a fan-made Cathay-info website, including weekly flight schedules, 2‑month history with on-time performance, fleet details, coverage route map, lounge amenities and chatbots coming soon.",
 };
 
 export default function RootLayout({

@@ -143,12 +143,12 @@ export default function NavBar() {
 
 					<Link
 						href="/"
-						className="flex items-end gap-2 text-slate-900"
+						className="flex items-end gap-2 text-[#096963f6]"
 						aria-label="Home"
 					>
 						<WingLogo />
 						<span className="text-md font-semibold tracking-wide sm:inline self-end">
-							Unofficial Cathay App
+							The Jade Wings
 						</span>
 					</Link>
 
@@ -186,7 +186,7 @@ export default function NavBar() {
              Add the domain to next.config.js images.domains if remote. */}
 					<Image
 						src="/images/background/fleet_on_ground.webp"
-						alt="Cathay Tracker banner"
+						alt="Jade Wings banner"
 						fill
 						priority
 						className="object-cover"
@@ -319,15 +319,12 @@ function slug(s: string) {
 /* Minimal wing-like logo (replace with your own if needed) */
 function WingLogo() {
 	return (
-		<svg
-			viewBox="0 0 48 48"
+		<Image
+			src={"/images/icons/jade_wings.png"}
+			width={48}
+			height={48}
 			className="h-7 w-7"
-			aria-hidden="true"
-		>
-			<path
-				d="M6 28c12-1 17-8 36-16-6 9-10 18-28 22 8 0 14-1 22-4-6 6-14 10-26 10-3 0-5-2-5-5 0-3 0-6 1-7z"
-				fill="#059669"
-			/>
-		</svg>
+			alt={"Cathay Pacific"}
+		/>
 	);
 }

@@ -53,7 +53,7 @@ export default function Features() {
 					/>
 
 					<FeatureCard
-						href="/lounges"
+						href="/lounge"
 						title="Lounge Guide"
 						body="Complete guide to Cathay Pacific lounges worldwide with amenities and access"
 						img={{

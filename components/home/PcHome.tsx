@@ -23,11 +23,11 @@ export default function PcHome() {
 						Please Switch to Mobile!
 					</h2>
 					<p className="text-base text-gray-600">
-						Thank you for visiting the Cathay Tracker fan page.
+						Thank you for visiting the Jade Wings.
 					</p>
 					<p className="text-base text-gray-600">
 						For the best experience, visit{" "}
-						<Link href="https://cathay-tracker.vercel.app/">
+						<Link href="https://www.jadewings.com">
 							<span className="font-bold underline">this site</span>
 						</Link>{" "}
 						using a mobile browser or scan the QR code on the right.
