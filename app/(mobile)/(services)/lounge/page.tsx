@@ -15,7 +15,7 @@ const experiences = [
 		description:
 			"Enjoy decent culinary prepared to order in flagship lounges.",
 		gradient: "from-emerald-50 to-teal-50",
-		image: "/images/lounge/food_bar.jpg",
+		image: "/images/lounges/food_bar.jpg",
 	},
 	{
 		icon: "💆🏻‍♂️",
@@ -23,7 +23,7 @@ const experiences = [
 		description:
 			"Relax with curated teas and serene seating for a calming pre-flight experience.",
 		gradient: "from-teal-50 to-cyan-50",
-		image: "/images/lounge/massage.jpg",
+		image: "/images/lounges/massage.jpg",
 	},
 	{
 		icon: "🛏️",
@@ -31,7 +31,7 @@ const experiences = [
 		description:
 			"Dedicated spaces designed to help you unwind and recharge.",
 		gradient: "from-emerald-50 to-teal-50",
-		image: "/images/lounge/retreat.jpg",
+		image: "/images/lounges/retreat.jpg",
 	},
 ];
 
@@ -118,7 +118,7 @@ export default function LoungesPage() {
 							{/* Image */}
 							<div className="relative w-full h-48 sm:h-64">
 								<Image
-									src="/images/lounge/hkia.jpg" // Replace with your HKIA image path
+									src="/images/lounges/hkia.jpg" // Replace with your HKIA image path
 									alt="HKIA"
 									fill
 									className="object-cover"
@@ -139,7 +139,7 @@ export default function LoungesPage() {
 							{/* Image */}
 							<div className="relative w-full h-48 sm:h-64">
 								<Image
-									src="/images/lounge/heathrow.jpg" // Replace with your "Other Cathay Operated" image path
+									src="/images/lounges/heathrow.jpg" // Replace with your "Other Cathay Operated" image path
 									alt="Other Cathay Operated"
 									fill
 									className="object-cover"

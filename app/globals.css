@@ -1,14 +1,21 @@
 @import "tailwindcss";
 
-/* Define Light and Dark Themes */
+/* ---------- Theme tokens (Light; keep or extend with dark mode) ---------- */
 :root {
 	--background: #ffffff;
 	--foreground: #171717;
-	--primary-color: #004b47; /* Cathay Pacific green */
-	--light-bg: #f9f9f9; /* Soft background for sections */
-	--accent-color: #008060; /* Accent color for hover states */
+	--primary-color: #004b47; /* Cathay green (primary) */
+	--light-bg: #f9f9f9; /* Soft section background */
+	--accent-color: #008060; /* Hover/interactive accent */
+
+	/* Optional lounge-inspired neutrals (can be referenced in components) */
+	--mist: #f5f7f6;
+	--sky: #e6f3f0;
+	--sand: #d0c7b7;
+	--green-dark: #004d43;
 }
 
+/* Tailwind v4 inline theme mapping (hooks Tailwind tokens to your vars) */
 @theme inline {
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
@@ -16,9 +23,71 @@
 	--font-mono: var(--font-geist-mono);
 }
 
-/* Apply Global Styles */
+/* ---------- Global base styles ---------- */
+html {
+	scroll-behavior: smooth; /* Better anchor jumps */
+}
+
+* {
+	-webkit-tap-highlight-color: transparent; /* Nicer mobile taps */
+}
+
 body {
 	background: var(--background);
 	color: var(--foreground);
 	font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- Utility helpers ---------- */
+/* For bottom-fixed bars on iOS (e.g., MobileNav/CTA) */
+.safe-bottom {
+	padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Soft page background often used behind cards */
+.bg-mist {
+	background-color: var(--mist);
+}
+
+/* Subtle tinted background */
+.bg-sky {
+	background-color: var(--sky);
+}
+
+/* Premium neutral (use for borders/accents sparingly) */
+.text-sand {
+	color: var(--sand);
+}
+
+/* Primary brand color utility (when Tailwind color tokens aren’t enough) */
+.text-brand {
+	color: var(--primary-color);
+}
+.bg-brand {
+	background-color: var(--primary-color);
+}
+.bg-brand-dark {
+	background-color: var(--green-dark);
+}
+
+/* Light section wrapper (useful for segments that mimic lounge feel) */
+.section-soft {
+	background: var(--light-bg);
+}
+
+/* Card shadow used across the cabin pages */
+.shadow-card {
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Optional: respect reduced motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
 }
