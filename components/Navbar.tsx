@@ -50,7 +50,7 @@ const NAV_ITEMS: NavItem[] = [
 		children: [
 			{
 				label: "Lounge Guide",
-				href: "/lounge",
+				href: "/lounges",
 				description: "Get the most out of your lounge visit",
 			},
 		],
