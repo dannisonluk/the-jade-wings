@@ -19,21 +19,21 @@ const FIRST_CLASS_LOUNGES: Lounge[] = [
 		// subtitle: "Terminal 1, near gate 2",
 		image: "/images/lounges/hk/thewing_first.jpg",
 		alt: "The Wing | First Class Lounge",
-		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing-first.html"
+		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing-first.html",
 	},
 	{
 		title: "The Pier | First Class",
 		subtitle: "Terminal 1, near gate 63",
 		image: "/images/lounges/hk/thepier_first.webp",
 		alt: "The Pier | First Class Lounge",
-		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-pier-first.html"
+		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-pier-first.html",
 	},
 	{
 		title: "The Deck | Temp. First Class",
 		subtitle: "Terminal 1, near gate 6",
-		image: "/images/lounges/hk/thedeck_business.jfif",
+		image: "/images/lounges/hk/thedeck_business.webp",
 		alt: "The Deck | Temporarily First Class Lounge",
-		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-deck.html"
+		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-deck.html",
 	},
 ];
 
@@ -43,21 +43,21 @@ const BUSINESS_LOUNGES: Lounge[] = [
 		subtitle: "Terminal 1, near gate 2",
 		image: "/images/lounges/hk/thewing_business.webp",
 		alt: "The Wing | Business Class Lounge",
-		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing.html"
+		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing.html",
 	},
 	{
 		title: "The Pier | Business Class",
 		subtitle: "Terminal 1, near gate 65",
 		image: "/images/lounges/hk/thepier_business.jpg",
 		alt: "The Pier | Business Class Lounge",
-		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-pier.html"
+		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-pier.html",
 	},
 	{
 		title: "The Bridge",
 		subtitle: "Terminal 1, near gate 35",
 		image: "/images/lounges/hk/thebridge_business.webp",
 		alt: "The Bridge | Business Class Lounge",
-		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-bridge.html"
+		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-bridge.html",
 	},
 ];
 
