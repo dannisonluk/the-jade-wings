@@ -109,53 +109,67 @@ export default function LoungesPage() {
 
 				{/* Lounge Location */}
 				<section className="mt-8">
-					<h2 className="text-lg font-semibold text-gray-900 mb-3">
+					<h2 className="text-lg font-semibold text-gray-900 mb-2">
 						Lounge Location
 					</h2>
+					<div className=" mb-2 bg-emerald-100 border-l-4 border-emerald-500 text-emerald-800 text-sm rounded-md p-3 mt-3 shadow-sm">
+						<span>
+							Explore the{" "}
+							<span className="font-bold">2 categories</span>{" "}
+							below to learn more about Cathay&apos;s exclusive
+							lounges.
+						</span>
+					</div>
 					<div className="flex flex-col sm:flex-row bg-white rounded-2xl ring-1 ring-gray-200 overflow-hidden">
 						{/* HKIA Side */}
-						<div className="flex-1 relative group">
-							{/* Image */}
-							<div className="relative w-full h-48 sm:h-64">
-								<Image
-									src="/images/lounges/hkia.jpg" // Replace with your HKIA image path
-									alt="HKIA"
-									fill
-									className="object-cover"
-								/>
+						<Link href="/lounges/hk">
+							<div className="flex-1 relative group">
+								{/* Image */}
+								<div className="relative w-full h-48 sm:h-64">
+									<Image
+										src="/images/lounges/hkia.jpg" // Replace with your HKIA image path
+										alt="HKIA"
+										fill
+										className="object-cover"
+									/>
+								</div>
+								{/* Text Overlay */}
+								<div className="absolute inset-x-0 bottom-0 bg-[#004b47]/80 text-white text-center py-4">
+									<h3 className="text-lg font-semibold">
+										Hong Kong International Airport
+									</h3>
+									<p className="text-sm">
+										The Pier | The Deck | The Wing | The
+										Bridge
+									</p>
+								</div>
 							</div>
-							{/* Text Overlay */}
-							<div className="absolute inset-x-0 bottom-0 bg-[#004b47]/80 text-white text-center py-4">
-								<h3 className="text-lg font-semibold">
-									Hong Kong International Airport
-								</h3>
-								<p className="text-sm">
-									The Pier | The Deck | The Wing | The Bridge
-								</p>
-							</div>
-						</div>
+						</Link>
 						{/* Other Cathay Operated Side */}
-						<div className="flex-1 relative group">
-							{/* Image */}
-							<div className="relative w-full h-48 sm:h-64">
-								<Image
-									src="/images/lounges/heathrow.jpg" // Replace with your "Other Cathay Operated" image path
-									alt="Other Cathay Operated"
-									fill
-									className="object-cover"
-								/>
+						{/* <Link href="/lounges/worldwide"> */}
+						<Link href="/under_development">
+							<div className="flex-1 relative group">
+								{/* Image */}
+								<div className="relative w-full h-48 sm:h-64">
+									<Image
+										src="/images/lounges/heathrow.jpg" // Replace with your "Other Cathay Operated" image path
+										alt="Other Cathay Operated"
+										fill
+										className="object-cover"
+									/>
+								</div>
+								{/* Text Overlay */}
+								<div className="absolute inset-x-0 bottom-0 bg-[#004b47]/80 text-white text-center py-4">
+									<h3 className="text-lg font-semibold">
+										Other Cathay Operated
+									</h3>
+									<p className="text-sm">
+										Premium lounges in Cathay-connected
+										major cities
+									</p>
+								</div>
 							</div>
-							{/* Text Overlay */}
-							<div className="absolute inset-x-0 bottom-0 bg-[#004b47]/80 text-white text-center py-4">
-								<h3 className="text-lg font-semibold">
-									Other Cathay Operated
-								</h3>
-								<p className="text-sm">
-									Premium lounges in Cathay-connected major
-									cities
-								</p>
-							</div>
-						</div>
+						</Link>
 					</div>
 					<div className="bg-emerald-100 border-l-4 border-emerald-500 text-emerald-800 text-sm rounded-md p-3 mt-3 shadow-sm">
 						<Link href="https://www.cathaypacific.com/cx/en_HK/destinations/lounges/worldwide-lounges.html">

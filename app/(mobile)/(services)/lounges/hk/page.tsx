@@ -5,59 +5,59 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 type Lounge = {
-	slug: string;
 	title: string;
 	subtitle: string;
 	image: string;
 	alt: string;
+	link: string;
 };
 
 const FIRST_CLASS_LOUNGES: Lounge[] = [
 	{
-		slug: "/lounges/hkg/the-wing-first",
 		title: "The Wing | First Class",
 		subtitle: "Temporarily Closed",
 		// subtitle: "Terminal 1, near gate 2",
 		image: "/images/lounges/hk/thewing_first.jpg",
 		alt: "The Wing | First Class Lounge",
+		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing-first.html"
 	},
 	{
-		slug: "/lounges/hkg/the-pier-first",
 		title: "The Pier | First Class",
 		subtitle: "Terminal 1, near gate 63",
 		image: "/images/lounges/hk/thepier_first.webp",
 		alt: "The Pier | First Class Lounge",
+		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-pier-first.html"
 	},
 	{
-		slug: "/lounges/hkg/the-deck-business",
 		title: "The Deck | Temp. First Class",
 		subtitle: "Terminal 1, near gate 6",
 		image: "/images/lounges/hk/thedeck_business.jfif",
 		alt: "The Deck | Temporarily First Class Lounge",
+		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-deck.html"
 	},
 ];
 
 const BUSINESS_LOUNGES: Lounge[] = [
 	{
-		slug: "/lounges/hkg/the-wing-business",
 		title: "The Wing | Business Class",
 		subtitle: "Terminal 1, near gate 2",
 		image: "/images/lounges/hk/thewing_business.webp",
 		alt: "The Wing | Business Class Lounge",
+		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing.html"
 	},
 	{
-		slug: "/lounges/hkg/the-pier-business",
 		title: "The Pier | Business Class",
 		subtitle: "Terminal 1, near gate 65",
 		image: "/images/lounges/hk/thepier_business.jpg",
 		alt: "The Pier | Business Class Lounge",
+		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-pier.html"
 	},
 	{
-		slug: "/lounges/hkg/the-bridge-business",
 		title: "The Bridge",
 		subtitle: "Terminal 1, near gate 35",
 		image: "/images/lounges/hk/thebridge_business.webp",
 		alt: "The Bridge | Business Class Lounge",
+		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-bridge.html"
 	},
 ];
 
@@ -65,7 +65,7 @@ function LoungeCard({ lounge }: { lounge: Lounge }) {
 	return (
 		<li className="snap-start shrink-0 w-[88%] xs:w-[80%] sm:w-auto sm:shrink sm:snap-none">
 			<Link
-				href={lounge.slug}
+				href={lounge.link}
 				className="group relative block overflow-hidden bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
 			>
 				{/* Image container keeps aspect ratio */}
@@ -105,15 +105,15 @@ export default function HongKongLoungePage() {
 	return (
 		<div className="min-h-screen bg-white">
 			<div className="bg-gradient-to-b from-teal-50 to-white">
-				<div className="mx-auto max-w-5xl px-4 pt-6 sm:py-12">
+				<div className="mx-auto max-w-5xl px-4 pt-6 sm:py-12 pb-4">
 					<h1 className="text-2xl font-extrabold tracking-tight text-[#004b47] sm:text-3xl">
 						Cathay at Hong Kong
 					</h1>
 					<p className="mt-3 max-w-2xl text-md text-gray-700">
 						Cathay Pacific operates several decent lounges at Hong
-						Kong International Airport and these lounges
-						showcase Cathay&apos;s commitment to providing excellent
-						service and hospitality.
+						Kong International Airport and these lounges showcase
+						Cathay&apos;s commitment to providing excellent service
+						and hospitality.
 					</p>
 
 					{/* Lounges block */}
@@ -139,7 +139,7 @@ export default function HongKongLoungePage() {
 							>
 								{FIRST_CLASS_LOUNGES.map((l) => (
 									<LoungeCard
-										key={l.slug}
+										key={l.link}
 										lounge={l}
 									/>
 								))}
@@ -149,11 +149,11 @@ export default function HongKongLoungePage() {
 							<ul className="mt-4 hidden grid-cols-2 gap-4 sm:grid lg:grid-cols-3">
 								{FIRST_CLASS_LOUNGES.map((l) => (
 									<li
-										key={l.slug}
+										key={l.link}
 										className="min-w-0"
 									>
 										<Link
-											href={l.slug}
+											href={l.link}
 											className="group relative block overflow-hidden rounded-xl bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
 										>
 											<div className="relative aspect-[16/10] lg:aspect-[16/9]">
@@ -204,7 +204,7 @@ export default function HongKongLoungePage() {
 							>
 								{BUSINESS_LOUNGES.map((l) => (
 									<LoungeCard
-										key={l.slug}
+										key={l.link}
 										lounge={l}
 									/>
 								))}
@@ -214,11 +214,11 @@ export default function HongKongLoungePage() {
 							<ul className="mt-4 hidden grid-cols-2 gap-4 sm:grid lg:grid-cols-3">
 								{BUSINESS_LOUNGES.map((l) => (
 									<li
-										key={l.slug}
+										key={l.link}
 										className="min-w-0"
 									>
 										<Link
-											href={l.slug}
+											href={l.link}
 											className="group relative block overflow-hidden rounded-xl bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-600"
 										>
 											<div className="relative aspect-[16/10] lg:aspect-[16/9]">
