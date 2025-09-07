@@ -139,7 +139,7 @@ const getWindowBounds = () => {
 	const now = new Date();
 	const start = new Date(
 		now.getFullYear(),
-		now.getMonth() - 1,
+		5, // now.getMonth() - 1,
 		1,
 		0,
 		0,
@@ -148,7 +148,7 @@ const getWindowBounds = () => {
 	);
 	const end = new Date(
 		now.getFullYear(),
-		now.getMonth() + 1,
+		7, // now.getMonth() + 1,
 		0,
 		23,
 		59,
@@ -350,8 +350,8 @@ export default function FlightSearchPage() {
 										Press Enter ↵
 									</span> */}
 									<span className="px-2 py-1 rounded-md border border-[#DADDE1] bg-[#FFFFFF] text-[#475569]">
-										Only Japan routes are supported
-										currently
+										Only Japan routes are supported for
+										feature testing
 									</span>
 								</div>
 							</div>

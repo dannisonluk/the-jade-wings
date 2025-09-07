@@ -166,13 +166,14 @@ export default function SchedulePage() {
 		<main className="min-h-screen bg-whtie">
 			<div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 bg-white">
 				{/* Header */}
-				<header className="py-8 sm:py-10 lg:py-12 text-center">
+				<header className="py-6 sm:py-10 lg:py-12 text-center">
 					<h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
 						Flight Schedule
 					</h1>
 					<p className="mt-2 text-sm sm:text-base text-slate-600">
-						Last updated:{" "}
-						{lastUpdated.toLocaleDateString("en-HK", dateFmt)}
+						Last updated: 31 August 2025
+						{/* Last updated:{" "}
+						{lastUpdated.toLocaleDateString("en-HK", dateFmt)} */}
 					</p>
 					<p className="mt-2 text-xs sm:text-sm text-emerald-700">
 						Only regions EUR, SAMEA and SWP are available.
