@@ -22,20 +22,66 @@ interface FlightData {
 	status: string;
 }
 
+interface FlightMetadata {
+	region: string;
+	origin: string;
+	layover: string;
+	destination: string;
+	port: string;
+}
+
 interface CandidateFile {
 	airport: string;
 	filePath: string;
+	region: string;
 }
+
 interface FileMeta {
 	airport: string;
 	filePath: string;
+	region: string;
 	mtimeMs: number;
 	sheetNames: Set<string>;
 }
 
-// Config
-const airports = ["KIX", "NGO", "FUK", "NRT", "HND", "CTS"] as const;
-const baseDir = path.join(process.cwd(), "db", "xlsx", "flown", "NEA");
+// Load flight metadata from JSON
+const flightMetadataMap: Map<string, FlightMetadata> = new Map();
+let metadataReady: Promise<void> | null = null;
+
+async function loadFlightMetadata(): Promise<void> {
+	try {
+		// Updated path to match your structure
+		const metadataPath = path.join(
+			process.cwd(),
+			"db",
+			"json",
+			"schedule",
+			"mapper",
+			"flight_number_region_port.json"
+		);
+		const data = await fs.readFile(metadataPath, "utf-8");
+		const parsed = JSON.parse(data) as Record<string, FlightMetadata>;
+
+		flightMetadataMap.clear();
+		for (const [flightNumber, metadata] of Object.entries(parsed)) {
+			flightMetadataMap.set(normFlight(flightNumber), metadata);
+		}
+
+		console.log(`Loaded metadata for ${flightMetadataMap.size} flights`);
+	} catch (error) {
+		console.error("Failed to load flight metadata:", error);
+		// Fallback to empty map if metadata file doesn't exist
+		flightMetadataMap.clear();
+	}
+}
+
+function ensureMetadata(): Promise<void> {
+	if (!metadataReady) metadataReady = loadFlightMetadata();
+	return metadataReady;
+}
+
+// Config - base directory for XLSX files
+const baseDir = path.join(process.cwd(), "db", "xlsx", "flown");
 
 // In-memory indexes
 const sheetIndex = new Map<string, CandidateFile[]>(); // flightNumber -> files
@@ -56,7 +102,6 @@ function toHHMM(hours: number, minutes: number): string {
 function excelTimeToHHMM(v: ExcelCellValue): string {
 	if (v == null || v === "" || v === "-" || v === "--") return "--";
 	if (typeof v === "number") {
-		// Excel time is fraction of a day; keep only fractional part
 		const frac = v % 1;
 		const minutesTotal = Math.round(
 			(frac >= 0 ? frac : frac + 1) * 24 * 60
@@ -111,56 +156,92 @@ function s(v: ExcelCellValue): string {
 
 // Typed wrapper around XLSX.utils.sheet_to_json with header: 1
 function sheetToRowsHeader1(ws: XLSX.WorkSheet): ExcelRowArray[] {
-	// The XLSX types don't capture the tuple nature with header:1, so we cast the array shape,
-	// but we don't use any; we assert to ExcelRowArray[], which we defined.
 	const rows = XLSX.utils.sheet_to_json<unknown[]>(ws, {
 		header: 1,
 		defval: null,
 		raw: true,
 	});
-	// Enforce runtime shape: array of arrays
 	return rows.map((r) =>
 		Array.isArray(r) ? (r as ExcelRowArray) : ([] as ExcelRowArray)
 	);
 }
 
-// Index building
+// Get unique regions and ports from metadata
+function getRegionsAndPorts(): {
+	regions: Set<string>;
+	portsByRegion: Map<string, Set<string>>;
+} {
+	const regions = new Set<string>();
+	const portsByRegion = new Map<string, Set<string>>();
+
+	for (const metadata of flightMetadataMap.values()) {
+		regions.add(metadata.region);
+
+		const ports = portsByRegion.get(metadata.region) || new Set<string>();
+		ports.add(metadata.port);
+		portsByRegion.set(metadata.region, ports);
+	}
+
+	return { regions, portsByRegion };
+}
+
+// Index building - now dynamic based on metadata
 async function buildIndex(): Promise<void> {
 	sheetIndex.clear();
 	fileMeta.clear();
 
-	await Promise.all(
-		airports.map(async (airport) => {
-			const filePath = path.join(baseDir, `${airport}.xlsx`);
-			try {
-				const stat = await fs.stat(filePath);
-				const buf = await fs.readFile(filePath);
-				const wb = XLSX.read(buf, {
-					type: "buffer",
-					raw: true,
-					cellDates: true,
-				});
+	// Ensure metadata is loaded first
+	await ensureMetadata();
 
-				const sheets = new Set<string>(wb.SheetNames.map(normFlight));
-				fileMeta.set(filePath, {
-					airport,
-					filePath,
-					mtimeMs: stat.mtimeMs,
-					sheetNames: sheets,
-				});
+	const { portsByRegion } = getRegionsAndPorts();
 
-				for (const sheetName of sheets) {
-					const list = sheetIndex.get(sheetName) ?? [];
-					list.push({ airport, filePath });
-					sheetIndex.set(sheetName, list);
-				}
-			} catch (e) {
-				console.warn(
-					`[index] Skip ${filePath}: ${(e as Error).message}`
-				);
-			}
-		})
+	// Build index for each region and its ports
+	const indexPromises: Promise<void>[] = [];
+
+	for (const [region, ports] of portsByRegion.entries()) {
+		for (const port of ports) {
+			indexPromises.push(indexPortFile(region, port));
+		}
+	}
+
+	await Promise.all(indexPromises);
+
+	console.log(
+		`Index built: ${sheetIndex.size} flight sheets across ${fileMeta.size} files`
 	);
+}
+
+async function indexPortFile(region: string, port: string): Promise<void> {
+	const filePath = path.join(baseDir, region, `${port}.xlsx`);
+
+	try {
+		const stat = await fs.stat(filePath);
+		const buf = await fs.readFile(filePath);
+		const wb = XLSX.read(buf, {
+			type: "buffer",
+			raw: true,
+			cellDates: true,
+		});
+
+		const sheets = new Set<string>(wb.SheetNames.map(normFlight));
+		fileMeta.set(filePath, {
+			airport: port,
+			filePath,
+			region,
+			mtimeMs: stat.mtimeMs,
+			sheetNames: sheets,
+		});
+
+		for (const sheetName of sheets) {
+			const list = sheetIndex.get(sheetName) ?? [];
+			list.push({ airport: port, filePath, region });
+			sheetIndex.set(sheetName, list);
+		}
+
+		console.log(`Indexed ${filePath}: ${sheets.size} sheets`);
+	} catch (e) {
+		console.warn(`[index] Skip ${filePath}: ${(e as Error).message}`);
+	}
 }
 
 function ensureIndex(): Promise<void> {
@@ -168,10 +249,35 @@ function ensureIndex(): Promise<void> {
 	return indexReady;
 }
 
+// Smart file finding using metadata
 function findFilesForFlight(
 	flightNumber: string
 ): ReadonlyArray<CandidateFile> {
 	const key = normFlight(flightNumber);
+
+	// First, try to use metadata to find the exact file
+	const metadata = flightMetadataMap.get(key);
+	if (metadata) {
+		const targetPath = path.join(
+			baseDir,
+			metadata.region,
+			`${metadata.port}.xlsx`
+		);
+		const meta = fileMeta.get(targetPath);
+
+		if (meta && meta.sheetNames.has(key)) {
+			// Found exact match using metadata
+			return [
+				{
+					airport: metadata.port,
+					filePath: targetPath,
+					region: metadata.region,
+				},
+			];
+		}
+	}
+
+	// Fallback to index search if metadata doesn't yield results
 	return sheetIndex.get(key) ?? [];
 }
 
@@ -192,7 +298,6 @@ async function readFlightsFromFile(
 		const r = rows[i];
 		if (!r || r.length === 0) continue;
 
-		// r indices are typed as ExcelCellValue | undefined; guard with ?? null
 		out.push({
 			date: formatExcelDate(r[0] ?? null),
 			from: s(r[1] ?? null),
@@ -212,13 +317,50 @@ async function readFlightsFromFile(
 	return out;
 }
 
-// Small response cache
+// Response cache with metadata awareness
 interface CachedResp {
 	flights: FlightData[];
+	metadata?: FlightMetadata;
 	ts: number;
 }
 const respCache = new Map<string, CachedResp>();
 const RESP_TTL = 60_000;
+
+// Force reload indexes if metadata changes
+export async function reloadIndexes(): Promise<void> {
+	metadataReady = null;
+	indexReady = null;
+	respCache.clear();
+	await ensureMetadata();
+	await ensureIndex();
+}
+
+// Optional: Watch for metadata file changes in development
+if (process.env.NODE_ENV === "development") {
+	const metadataPath = path.join(
+		process.cwd(),
+		"db",
+		"json",
+		"schedule",
+		"mapper",
+		"flight_number_region_port.json"
+	);
+
+	// Check if file has changed periodically in dev mode
+	let lastMtime = 0;
+	setInterval(async () => {
+		try {
+			const stat = await fs.stat(metadataPath);
+			if (stat.mtimeMs > lastMtime) {
+				lastMtime = stat.mtimeMs;
+				console.log("Flight metadata changed, reloading...");
+				await reloadIndexes();
+			}
+		} catch (e) {
+			// File might not exist yet
+		}
+	}, 5000); // Check every 5 seconds in dev mode
+}
 
 export async function GET(
 	_req: NextRequest,
@@ -228,24 +370,38 @@ export async function GET(
 		const { flightNumber } = await context.params;
 		const fn = normFlight(flightNumber);
 
+		// Ensure both metadata and index are ready
+		await ensureMetadata();
 		await ensureIndex();
 
+		// Check cache
 		const cached = respCache.get(fn);
 		if (cached && Date.now() - cached.ts < RESP_TTL) {
 			return NextResponse.json({
 				flightNumber: fn,
 				flights: cached.flights,
+				metadata: cached.metadata,
 			});
 		}
 
+		// Get metadata for this flight
+		const metadata = flightMetadataMap.get(fn);
+
+		// Find files containing this flight
 		const candidates = findFilesForFlight(fn);
 		if (candidates.length === 0) {
 			return NextResponse.json(
-				{ error: "Flight not found" },
+				{
+					error: "Flight not found",
+					hint: metadata
+						? `Expected in ${metadata.region}/${metadata.port}.xlsx`
+						: "No metadata available for this flight",
+				},
 				{ status: 404 }
 			);
 		}
 
+		// Read flight data from all candidate files
 		const results = await Promise.all(
 			candidates.map(({ filePath }) => readFlightsFromFile(filePath, fn))
 		);
@@ -253,17 +409,32 @@ export async function GET(
 
 		if (flights.length === 0) {
 			return NextResponse.json(
-				{ error: "Flight not found" },
+				{
+					error: "No flight data found",
+					hint: metadata
+						? `Sheet exists but contains no data in ${metadata.region}/${metadata.port}.xlsx`
+						: undefined,
+				},
 				{ status: 404 }
 			);
 		}
 
-		respCache.set(fn, { flights, ts: Date.now() });
-		return NextResponse.json({ flightNumber: fn, flights });
+		// Cache the response
+		respCache.set(fn, { flights, metadata, ts: Date.now() });
+
+		return NextResponse.json({
+			flightNumber: fn,
+			flights,
+			metadata,
+			source: candidates.map((c) => ({
+				airport: c.airport,
+				region: c.region,
+			})),
+		});
 	} catch (e) {
 		console.error("Error fetching flight data:", e);
 		return NextResponse.json(
-			{ error: "Internal server error" },
+			{ error: "Internal server error", details: (e as Error).message },
 			{ status: 500 }
 		);
 	}

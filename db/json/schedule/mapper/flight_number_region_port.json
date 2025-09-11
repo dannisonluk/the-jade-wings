@@ -1,0 +1,296 @@
+{
+	"CX543": {
+		"region": "NEA",
+		"origin": "HND",
+		"layover": "",
+		"destination": "HKG",
+		"port": "HND"
+	},
+	"CX549": {
+		"region": "NEA",
+		"origin": "HND",
+		"layover": "",
+		"destination": "HKG",
+		"port": "HND"
+	},
+	"CX542": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "HND",
+		"port": "HND"
+	},
+	"CX548": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "HND",
+		"port": "HND"
+	},
+	"CX502": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "KIX",
+		"port": "KIX"
+	},
+	"CX506": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "KIX",
+		"port": "KIX"
+	},
+	"CX566": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "KIX",
+		"port": "KIX"
+	},
+	"CX596": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "KIX",
+		"port": "KIX"
+	},
+	"CX598": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "KIX",
+		"port": "KIX"
+	},
+	"CX564": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "TPE",
+		"destination": "KIX",
+		"port": "KIX"
+	},
+	"CX503": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "KIX",
+		"port": "KIX"
+	},
+	"CX507": {
+		"region": "NEA",
+		"origin": "KIX",
+		"layover": "",
+		"destination": "HKG",
+		"port": "KIX"
+	},
+	"CX569": {
+		"region": "NEA",
+		"origin": "KIX",
+		"layover": "",
+		"destination": "HKG",
+		"port": "KIX"
+	},
+	"CX595": {
+		"region": "NEA",
+		"origin": "KIX",
+		"layover": "",
+		"destination": "HKG",
+		"port": "KIX"
+	},
+	"CX597": {
+		"region": "NEA",
+		"origin": "KIX",
+		"layover": "",
+		"destination": "HKG",
+		"port": "KIX"
+	},
+	"CX565": {
+		"region": "NEA",
+		"origin": "KIX",
+		"layover": "TPE",
+		"destination": "HKG",
+		"port": "KIX"
+	},
+	"CX501": {
+		"region": "NEA",
+		"origin": "NRT",
+		"layover": "",
+		"destination": "HKG",
+		"port": "NRT"
+	},
+	"CX505": {
+		"region": "NEA",
+		"origin": "NRT",
+		"layover": "",
+		"destination": "HKG",
+		"port": "NRT"
+	},
+	"CX509": {
+		"region": "NEA",
+		"origin": "NRT",
+		"layover": "",
+		"destination": "HKG",
+		"port": "NRT"
+	},
+	"CX521": {
+		"region": "NEA",
+		"origin": "NRT",
+		"layover": "",
+		"destination": "HKG",
+		"port": "NRT"
+	},
+	"CX527": {
+		"region": "NEA",
+		"origin": "NRT",
+		"layover": "",
+		"destination": "HKG",
+		"port": "NRT"
+	},
+	"CX451": {
+		"region": "NEA",
+		"origin": "NRT",
+		"layover": "TPE",
+		"destination": "HKG",
+		"port": "NRT"
+	},
+	"CX500": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "NRT",
+		"port": "NRT"
+	},
+	"CX504": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "NRT",
+		"port": "NRT"
+	},
+	"CX520": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "NRT",
+		"port": "NRT"
+	},
+	"CX524": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "NRT",
+		"port": "NRT"
+	},
+	"CX526": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "NRT",
+		"port": "NRT"
+	},
+	"CX450": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "TPE",
+		"destination": "NRT",
+		"port": "NRT"
+	},
+	"CX532": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "NGO",
+		"port": "NGO"
+	},
+	"CX536": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "NGO",
+		"port": "NGO"
+	},
+	"CX530": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "TPE",
+		"destination": "NGO",
+		"port": "NGO"
+	},
+	"CX539": {
+		"region": "NEA",
+		"origin": "NGO",
+		"layover": "",
+		"destination": "HKG",
+		"port": "NGO"
+	},
+	"CX563": {
+		"region": "NEA",
+		"origin": "NGO",
+		"layover": "",
+		"destination": "HKG",
+		"port": "NGO"
+	},
+	"CX531": {
+		"region": "NEA",
+		"origin": "NGO",
+		"layover": "TPE",
+		"destination": "HKG",
+		"port": "NGO"
+	},
+	"CX589": {
+		"region": "NEA",
+		"origin": "FUK",
+		"layover": "",
+		"destination": "HKG",
+		"port": "FUK"
+	},
+	"CX588": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "FUK",
+		"port": "FUK"
+	},
+	"CX512": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "FUK",
+		"port": "FUK"
+	},
+	"CX513": {
+		"region": "NEA",
+		"origin": "FUK",
+		"layover": "",
+		"destination": "HKG",
+		"port": "FUK"
+	},
+	"CX580": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "CTS",
+		"port": "CTS"
+	},
+	"CX582": {
+		"region": "NEA",
+		"origin": "HKG",
+		"layover": "",
+		"destination": "CTS",
+		"port": "CTS"
+	},
+	"CX581": {
+		"region": "NEA",
+		"origin": "CTS",
+		"layover": "",
+		"destination": "HKG",
+		"port": "CTS"
+	},
+	"CX583": {
+		"region": "NEA",
+		"origin": "CTS",
+		"layover": "",
+		"destination": "HKG",
+		"port": "CTS"
+	}
+}

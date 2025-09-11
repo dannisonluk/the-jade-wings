@@ -37,7 +37,7 @@ export default function SchedulePage() {
 	useEffect(() => {
 		async function loadScheduleData() {
 			try {
-				const scheduleFiles = ["EUR", "SWP", "SAMEA"];
+				const scheduleFiles = ["EUR", "SWP", "SAMEA", "SEA"];
 				const all = (
 					await Promise.all(
 						scheduleFiles.map(async (region) => {
@@ -176,7 +176,7 @@ export default function SchedulePage() {
 						{lastUpdated.toLocaleDateString("en-HK", dateFmt)} */}
 					</p>
 					<p className="mt-2 text-xs sm:text-sm text-emerald-700">
-						Only regions EUR, SAMEA and SWP are available.
+						Only regions EUR, SAMEA, SEA and SWP are available.
 					</p>
 				</header>
 
