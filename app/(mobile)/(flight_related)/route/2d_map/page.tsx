@@ -1,5 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 const RouteMap = dynamic(() => import("@/components/route/RouteMap2D"), {
 	ssr: false,
@@ -16,9 +17,14 @@ export default function Page() {
 							Cathay Pacific Route Map
 						</h1>
 						<p className="mt-1 text-sm text-white/90">
-							Explore destinations and connections across our
-							network.
+							Explore connections across CX network.
 						</p>
+						<Link href="/route/3d_map">
+							<span className="mt-2 inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs sm:text-sm text-slate-700 shadow-sm">
+								Click here to try the 3D version (under
+								development)
+							</span>
+						</Link>
 					</div>
 				</div>
 
@@ -61,7 +67,8 @@ export default function Page() {
 						{/* Footer hint (mobile friendly) */}
 						<div className="flex items-center justify-between gap-3 border-t border-slate-100 px-3 py-2 text-xs text-slate-500">
 							<p className="truncate">
-								Pan, zoom and tap an airport to view detailed information.
+								Pan, zoom and tap an airport to view detailed
+								information.
 							</p>
 							<div className="hidden sm:flex items-center gap-3">
 								<kbd className="rounded border border-slate-300 bg-slate-50 px-1.5 py-0.5 font-mono text-[11px] text-slate-700 shadow-xs">

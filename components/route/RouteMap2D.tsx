@@ -155,8 +155,8 @@ export default function RouteMap() {
 	const baseMarker: MarkerSettingsModel = {
 		visible: true,
 		dataSource: markers,
-		height: 8,
-		width: 8,
+		height: 10,
+		width: 10,
 		shape: "Circle",
 		fill: "#16a34a",
 		border: { color: "#ffffff", width: 2 },
