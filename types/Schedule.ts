@@ -24,4 +24,5 @@ export interface FlightSchedule {
 	departureTime: string;
 	arrivalTime: string;
 	operatingDays: OperatingDays;
+	pattern?: string; // Add this for special patterns like "1|2"
 }
