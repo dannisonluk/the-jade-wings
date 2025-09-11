@@ -326,8 +326,8 @@ interface CachedResp {
 const respCache = new Map<string, CachedResp>();
 const RESP_TTL = 60_000;
 
-// Force reload indexes if metadata changes
-export async function reloadIndexes(): Promise<void> {
+// Force reload indexes if metadata changes - INTERNAL ONLY, not exported
+async function reloadIndexes(): Promise<void> {
 	metadataReady = null;
 	indexReady = null;
 	respCache.clear();

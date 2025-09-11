@@ -27,9 +27,48 @@ import {
 	SparklesIcon,
 	ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
-import { FlightData, FlightSearchResult } from "@/types/Flight";
 
-/* ===================== Helpers (unchanged) ===================== */
+/* ===================== Types ===================== */
+
+interface FlightData {
+	date: string;
+	from: string;
+	to: string;
+	aircraft: string;
+	flightTime: string;
+	std: string;
+	atd: string;
+	sta: string;
+	ata: string;
+	status: string;
+}
+
+interface FlightMetadata {
+	region: string;
+	origin: string;
+	layover: string;
+	destination: string;
+	port: string;
+}
+
+interface FlightSearchResult {
+	flightNumber: string;
+	flights: FlightData[];
+	metadata?: FlightMetadata;
+	source?: Array<{
+		airport: string;
+		region: string;
+	}>;
+}
+
+interface RouteInfo {
+	from: string;
+	to: string;
+	hasLayover: boolean;
+	layover?: string;
+}
+
+/* ===================== Helpers ===================== */
 
 const parseTimeToMinutes = (t: string | undefined | null): number | null => {
 	if (!t) return null;
@@ -84,7 +123,6 @@ const ataFromStatus = (status?: string | null): string | null => {
 	return null;
 };
 
-/* Status accents using brand hex */
 const statusAccentClass = (
 	status: string,
 	sta: string,
@@ -92,13 +130,13 @@ const statusAccentClass = (
 ): string => {
 	const s = status.toLowerCase();
 	if (s.includes("scheduled")) return "bg-[#C8C6CC]";
-	if (s.includes("cancelled")) return "bg-[#F87171]"; // soft red bar
-	if (s.includes("delayed")) return "bg-[#C5B69C]"; // sand
+	if (s.includes("cancelled")) return "bg-[#F87171]";
+	if (s.includes("delayed")) return "bg-[#C5B69C]";
 	if (s.includes("landed")) {
 		const ataGuess = ataFromStatus(status) ?? ata ?? undefined;
 		const p = computeArrivalPerformance(sta, ataGuess);
-		if (p.level === "good") return "bg-[#0F7A6C]"; // Cathay Jade
-		if (p.level === "warn") return "bg-[#C5B69C]"; // sand
+		if (p.level === "good") return "bg-[#0F7A6C]";
+		if (p.level === "warn") return "bg-[#C5B69C]";
 		if (p.level === "bad") return "bg-[#F87171]";
 		return "bg-[#DADDE1]";
 	}
@@ -139,7 +177,7 @@ const getWindowBounds = () => {
 	const now = new Date();
 	const start = new Date(
 		now.getFullYear(),
-		5, // now.getMonth() - 1,
+		5, // June
 		1,
 		0,
 		0,
@@ -148,7 +186,7 @@ const getWindowBounds = () => {
 	);
 	const end = new Date(
 		now.getFullYear(),
-		7, // now.getMonth() + 1,
+		7, // July
 		0,
 		23,
 		59,
@@ -160,6 +198,41 @@ const getWindowBounds = () => {
 
 const extractAircraftType = (s?: string | null): string =>
 	s ? s.replace(/\s*\([^)]*\)\s*$/, "").trim() : "";
+
+const getActualRoute = (
+	metadata?: FlightMetadata,
+	flights?: FlightData[]
+): RouteInfo | null => {
+	if (metadata) {
+		if (
+			metadata.layover &&
+			metadata.layover !== "N/A" &&
+			metadata.layover !== ""
+		) {
+			return {
+				from: metadata.origin,
+				to: metadata.destination,
+				hasLayover: true,
+				layover: metadata.layover,
+			};
+		}
+		return {
+			from: metadata.origin,
+			to: metadata.destination,
+			hasLayover: false,
+		};
+	}
+
+	if (flights && flights.length > 0) {
+		return {
+			from: flights[0].from,
+			to: flights[0].to,
+			hasLayover: false,
+		};
+	}
+
+	return null;
+};
 
 /* ===================== Component ===================== */
 
@@ -236,6 +309,10 @@ export default function FlightSearchPage() {
 			return d >= start && d <= end;
 		});
 	}, [searchResult]);
+
+	const actualRoute = useMemo(() => {
+		return getActualRoute(searchResult?.metadata, filteredFlights);
+	}, [searchResult?.metadata, filteredFlights]);
 
 	const flownFlights = useMemo<FlightData[]>(() => {
 		return filteredFlights.filter(
@@ -346,11 +423,8 @@ export default function FlightSearchPage() {
 											{f}
 										</button>
 									))}
-									{/* <span className="px-2 py-1 rounded-md border border-[#DADDE1] bg-[#FFFFFF] text-[#475569]">
-										Press Enter ↵
-									</span> */}
 									<span className="px-2 py-1 rounded-md border border-[#DADDE1] bg-[#FFFFFF] text-[#475569]">
-										Only Japan routes are supported for
+										Only Japan routes are supported now for
 										feature testing
 									</span>
 								</div>
@@ -406,20 +480,35 @@ export default function FlightSearchPage() {
 											</div>
 										</div>
 									</div>
+
 									<div className="bg-[#FFFFFF] rounded-md p-3 border border-[#DADDE1]">
 										<div className="flex items-start gap-2.5">
 											<MapPinIcon className="h-5 w-5 text-[#2F8D7F]" />
-											<div>
+											<div className="flex-1">
 												<p className="text-[#64748B] text-xs">
-													Route
+													Route{" "}
+													{actualRoute?.hasLayover &&
+														"(with stopover)"}
 												</p>
-												<p className="text-lg font-medium text-[#0F7A6C]">
-													{filteredFlights[0]?.from} →{" "}
-													{filteredFlights[0]?.to}
+												<p className="text-md font-medium text-[#0F7A6C]">
+													{actualRoute
+														? `${actualRoute.from} → ${actualRoute.to}`
+														: "N/A"}
+
+													{actualRoute?.hasLayover &&
+														actualRoute.layover && (
+															<span className="ml-2 text-md font-medium text-[#0F7A6C]">
+																layover at{" "}
+																{
+																	actualRoute.layover
+																}
+															</span>
+														)}
 												</p>
 											</div>
 										</div>
 									</div>
+
 									<div className="bg-[#FFFFFF] rounded-md p-3 border border-[#DADDE1]">
 										<div className="flex items-start gap-2.5">
 											<ClockIcon className="h-5 w-5 text-[#2F8D7F]" />
@@ -434,6 +523,7 @@ export default function FlightSearchPage() {
 											</div>
 										</div>
 									</div>
+
 									<div className="bg-[#FFFFFF] rounded-md p-3 border border-[#DADDE1]">
 										<div className="flex items-start gap-2.5">
 											<ClockIcon className="h-5 w-5 text-[#2F8D7F]" />
@@ -546,7 +636,7 @@ export default function FlightSearchPage() {
 
 										{topAircraft.length >= 1 && (
 											<p className="mt-3 text-xs text-[#475569]">
-												Hint: There’s a good chance your
+												Hint: There&apos;s a good chance your
 												upcoming flight uses{" "}
 												{topAircraft
 													.map(([t], i) =>
@@ -625,6 +715,19 @@ export default function FlightSearchPage() {
 																f.sta,
 																f.ata
 															);
+														const isSegment =
+															searchResult
+																?.metadata
+																?.layover &&
+															(f.from ===
+																searchResult
+																	.metadata
+																	.layover ||
+																f.to ===
+																	searchResult
+																		.metadata
+																		.layover);
+
 														return (
 															<TableRow
 																key={`${f.date}-${i}`}
@@ -644,9 +747,18 @@ export default function FlightSearchPage() {
 																</TableCell>
 
 																<TableCell className="py-2.5">
-																	<span className="text-[#0F172A]">
-																		{f.from}
-																	</span>
+																	<div className="flex items-center gap-1">
+																		<span className="text-[#0F172A]">
+																			{
+																				f.from
+																			}
+																		</span>
+																		{isSegment && (
+																			<Badge className="text-xs scale-90 bg-[#EAF5F2] text-[#0F7A6C] border-[#5FAE9E33]">
+																				segment
+																			</Badge>
+																		)}
+																	</div>
 																</TableCell>
 
 																<TableCell className="py-2.5">
@@ -758,7 +870,7 @@ export default function FlightSearchPage() {
 													with Premium
 												</h3>
 												<p className="text-sm text-[#475569]">
-													You’re viewing{" "}
+													You&apos;re viewing{" "}
 													{filteredFlights.length} of{" "}
 													{searchResult?.flights
 														?.length ?? 0}{" "}
@@ -784,7 +896,7 @@ export default function FlightSearchPage() {
 						)}
 
 						{/* Column guide */}
-						<div className="fixed bottom-5 right-5 z-1000000001">
+						<div className="fixed bottom-5 right-5 z-50">
 							<div className="relative">
 								{showHelp && (
 									<div className="absolute bottom-14 right-0 w-72 bg-[#FFFFFF] rounded-md shadow-lg border border-[#DADDE1] p-3 mb-2">
