@@ -25,7 +25,7 @@ type NavItem =
 const NAV_ITEMS: NavItem[] = [
 	{ label: "Home", href: "/" },
 	{
-		label: "Flight Related",
+		label: "Flight Schedule / History / Network",
 		children: [
 			{
 				label: "Flight Schedule",
@@ -39,9 +39,14 @@ const NAV_ITEMS: NavItem[] = [
 					"Check aircraft type, flight history and on-time performance",
 			},
 			{
-				label: "Route Network",
+				label: "2D Route Network",
 				href: "/route/2d_map",
 				description: "Discover global coverage and destinations",
+			},
+			{
+				label: "3D Global - Flighty Clone",
+				href: "/route/3d_map",
+				description: "Under development",
 			},
 		],
 	},
@@ -56,7 +61,22 @@ const NAV_ITEMS: NavItem[] = [
 		],
 	},
 	{
-		label: "Fleet",
+		label: "Playground",
+		children: [
+			{
+				label: "3D Global - Flighty Clone",
+				href: "/route/3d_map",
+				description: "Under development",
+			},
+			{
+				label: "Chatbot about Cathay",
+				href: "/under_development",
+				description: "Under development",
+			},
+		],
+	},
+	{
+		label: "Cathay Fleet",
 		children: [
 			{
 				label: "View Fleet",
