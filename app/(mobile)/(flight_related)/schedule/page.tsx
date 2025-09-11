@@ -119,17 +119,28 @@ export default function SchedulePage() {
 		);
 	};
 
+	// Update the filtering logic to handle pattern-based flights
 	const filteredData = useMemo(() => {
 		return data.filter((flight) => {
-			const daysMatch = Object.keys(filters.operatingDays).some(
-				(day) =>
-					filters.operatingDays[
-						day as keyof typeof filters.operatingDays
-					] &&
-					flight.operatingDays[
-						day as keyof typeof filters.operatingDays
-					]
+			// For pattern-based flights (e.g., every 2 days),
+			// skip the operating days check if no day filter is selected
+			const hasPattern = flight.pattern;
+			const isDayFilterActive = Object.values(filters.operatingDays).some(
+				(d) => d
 			);
+
+			const daysMatch =
+				hasPattern && !isDayFilterActive
+					? true // If it has a pattern and no day filter is active, include it
+					: Object.keys(filters.operatingDays).some(
+							(day) =>
+								filters.operatingDays[
+									day as keyof typeof filters.operatingDays
+								] &&
+								flight.operatingDays[
+									day as keyof typeof filters.operatingDays
+								]
+					  );
 
 			const unifiedCityCountry =
 				!filters.cityOrCountry ||
@@ -155,6 +166,20 @@ export default function SchedulePage() {
 			);
 		});
 	}, [data, filters]);
+
+	// Helper function to render pattern description
+	const getPatternDescription = (pattern: string | undefined) => {
+		if (!pattern) return null;
+
+		const patterns: Record<string, string> = {
+			"1|2": "Every 2 days",
+			"1|3": "Every 3 days",
+			"1|7": "Weekly",
+			// Add more patterns as needed
+		};
+
+		return patterns[pattern] || `Pattern: ${pattern}`;
+	};
 
 	const dateFmt: Intl.DateTimeFormatOptions = {
 		year: "numeric",
@@ -417,9 +442,8 @@ export default function SchedulePage() {
 									className="relative rounded-2xl border border-slate-200 bg-white shadow-sm"
 								>
 									<div className="p-4 sm:p-5">
-										{/* Header block for vertical centering reference */}
+										{/* Header block */}
 										<div className="relative">
-											{/* Keep top-right badge; left-align text; vertically center */}
 											<div className="absolute right-0 top-1/2 -translate-y-1/2 max-w-[60%] rounded-md bg-slate-50 border border-slate-200 px-3 py-2 text-left">
 												<p className="text-xs sm:text-sm text-slate-600">
 													<span className="font-medium">
@@ -435,10 +459,7 @@ export default function SchedulePage() {
 												</p>
 											</div>
 
-											{/* Left header content */}
 											<div className="pr-[40%]">
-												{" "}
-												{/* reserve space so badge doesn’t overlap */}
 												<h3 className="text-lg font-semibold text-slate-900">
 													CX {flight.flightNumber}
 												</h3>
@@ -473,60 +494,79 @@ export default function SchedulePage() {
 											</div>
 										</dl>
 
-										{/* Operating days */}
-										<div className="mt-4 overflow-hidden rounded-lg border border-slate-200">
-											<table className="w-full border-collapse text-center">
-												<thead>
-													<tr className="bg-emerald-600 text-white text-xs sm:text-sm">
-														{[
-															"Sun",
-															"Mon",
-															"Tue",
-															"Wed",
-															"Thu",
-															"Fri",
-															"Sat",
-														].map((d) => (
-															<th
-																key={d}
-																className="p-2"
-															>
-																{d}
-															</th>
-														))}
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														{Object.keys(
-															flight.operatingDays
-														).map((day, i) => (
-															<td
-																key={day}
-																className={`p-2 text-sm ${
-																	i % 2 === 0
-																		? "bg-slate-50"
-																		: "bg-white"
-																}`}
-															>
-																{flight
-																	.operatingDays[
-																	day as keyof typeof flight.operatingDays
-																] ? (
-																	<span className="text-emerald-700 font-semibold">
-																		✔
-																	</span>
-																) : (
-																	<span className="text-slate-400">
-																		--
-																	</span>
-																)}
-															</td>
-														))}
-													</tr>
-												</tbody>
-											</table>
-										</div>
+										{/* Operating days or Pattern display */}
+										{flight.pattern ? (
+											// Show pattern information for special flights
+											<div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3">
+												<p className="text-sm font-medium text-amber-900">
+													Schedule:{" "}
+													{getPatternDescription(
+														flight.pattern
+													)}
+												</p>
+												<p className="text-xs text-amber-700 mt-1">
+													This flight operates on a
+													special schedule pattern
+												</p>
+											</div>
+										) : (
+											// Show regular operating days table
+											<div className="mt-4 overflow-hidden rounded-lg border border-slate-200">
+												<table className="w-full border-collapse text-center">
+													<thead>
+														<tr className="bg-emerald-600 text-white text-xs sm:text-sm">
+															{[
+																"Sun",
+																"Mon",
+																"Tue",
+																"Wed",
+																"Thu",
+																"Fri",
+																"Sat",
+															].map((d) => (
+																<th
+																	key={d}
+																	className="p-2"
+																>
+																	{d}
+																</th>
+															))}
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															{Object.keys(
+																flight.operatingDays
+															).map((day, i) => (
+																<td
+																	key={day}
+																	className={`p-2 text-sm ${
+																		i %
+																			2 ===
+																		0
+																			? "bg-slate-50"
+																			: "bg-white"
+																	}`}
+																>
+																	{flight
+																		.operatingDays[
+																		day as keyof typeof flight.operatingDays
+																	] ? (
+																		<span className="text-emerald-700 font-semibold">
+																			✔
+																		</span>
+																	) : (
+																		<span className="text-slate-400">
+																			--
+																		</span>
+																	)}
+																</td>
+															))}
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										)}
 									</div>
 								</article>
 							))}
