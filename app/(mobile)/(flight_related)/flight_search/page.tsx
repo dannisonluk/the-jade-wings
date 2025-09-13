@@ -424,7 +424,7 @@ export default function FlightSearchPage() {
 										</button>
 									))}
 									<span className="px-2 py-1 rounded-md border border-[#DADDE1] bg-[#FFFFFF] text-[#475569]">
-										Only Japan routes are supported now for
+										Only NorthEast Asia routes are supported now for
 										feature testing
 									</span>
 								</div>
