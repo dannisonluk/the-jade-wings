@@ -136,7 +136,7 @@ export default function FlightPlayback() {
 	const [playing, setPlaying] = useState(false);
 	const [iconLoaded, setIconLoaded] = useState(false);
 	const [speed, setSpeed] = useState(1);
-	const [follow, setFollow] = useState(true);
+	const [follow, setFollow] = useState(false);
 
 	const { dest, dateText } = parseDestAndDateFromFile(DEFAULT_FILE);
 
