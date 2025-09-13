@@ -64,8 +64,8 @@ const NAV_ITEMS: NavItem[] = [
 		label: "Playground",
 		children: [
 			{
-				label: "3D Global - Flighty Clone",
-				href: "/route/3d_map",
+				label: "Flying Route Visualizer - CDG Example",
+				href: "/route/specific_route",
 				description: "Under development",
 			},
 			{
