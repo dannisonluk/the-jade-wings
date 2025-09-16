@@ -84,8 +84,8 @@ export default function Features() {
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
 						<FeatureCard
 							href="/route/specific_route"
-							title="3D Historical Route Tracker"
-							body="Visualize real flight paths - CDG for demonstration"
+							title="3D Historical Route Visualizer"
+							body="Decide the side to sit for the best window view"
 							img={{
 								src: "/images/features/3d_flight_route.webp",
 								alt: "3D flight visualization",

@@ -64,9 +64,10 @@ const NAV_ITEMS: NavItem[] = [
 		label: "Playground",
 		children: [
 			{
-				label: "Flying Route Visualizer - CDG Example",
+				label: "Flying Route Visualizer",
 				href: "/route/specific_route",
-				description: "Under development",
+				description:
+					"View the actual route of your flight",
 			},
 			{
 				label: "Chatbot about Cathay",
