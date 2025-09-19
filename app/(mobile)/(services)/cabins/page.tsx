@@ -461,7 +461,7 @@ export default function CabinsPage() {
 											</button>
 										</DialogTrigger>
 
-										<DialogContent className="max-w-[92vw] sm:max-w-[520px] md:max-w-[640px] p-4 sm:p-6 z-[100] gap-2">
+										<DialogContent className="max-w-[92vw] sm:max-w-[520px] md:max-w-[640px] p-4 sm:p-6 z-[1000000001] gap-2">
 											<DialogHeader className="text-left">
 												<DialogTitle className="text-[#5e0f14]">
 													First Class Seat‑map
