@@ -446,8 +446,6 @@ export default function CabinsPage() {
 								<div className="mt-3 flex flex-wrap gap-2">
 									<Link
 										href="https://flights.cathaypacific.com/en_HK/flying-with-us/cabin-classes/first-class.html"
-										target="_blank"
-										rel="noopener noreferrer"
 									>
 										<button className="rounded-md bg-[#5e0f14] px-3 py-2 text-xs font-semibold text-white shadow hover:bg-[#4d0c11] focus:outline-none focus:ring-2 focus:ring-rose-300/60">
 											Explore First
@@ -461,7 +459,7 @@ export default function CabinsPage() {
 											</button>
 										</DialogTrigger>
 
-										<DialogContent className="max-w-[92vw] sm:max-w-[520px] md:max-w-[640px] p-4 sm:p-6 z-[100] gap-2">
+										<DialogContent className="max-w-[92vw] sm:max-w-[520px] md:max-w-[640px] p-4 sm:p-6 z-[1000000001] gap-2">
 											<DialogHeader className="text-left">
 												<DialogTitle className="text-[#5e0f14]">
 													First Class Seat‑map
