@@ -9,7 +9,6 @@ import {
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
-	DialogDescription,
 	DialogTrigger,
 } from "@/components/ui/dialog";
 
@@ -320,6 +319,26 @@ export default function CabinsPage() {
 							</li>
 						))}
 					</ul>
+					{/* CTA: Explore Aria Suite */}
+					<div className="mt-4 flex flex-wrap gap-2">
+						<Link
+							href="https://flights.cathaypacific.com/en_HK/flying-with-us/cabin-classes/business-class/the-aria-suite.html"
+						>
+							<button className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-xs font-semibold text-white ring-1 ring-inset ring-white/20 backdrop-blur hover:bg-white/15 active:bg-white/20">
+								<svg
+									viewBox="0 0 20 20"
+									aria-hidden="true"
+									className="h-3.5 w-3.5 text-emerald-200"
+								>
+									<path
+										fill="currentColor"
+										d="M11.3 4.3 16 9l-4.7 4.7-1.4-1.4 2-2H4v-2h7.9l-2-2 1.4-1.4z"
+									/>
+								</svg>
+								Explore Aria Suite
+							</button>
+						</Link>
+					</div>
 				</CabinCard>
 
 				{/* 2. First */}
@@ -452,6 +471,106 @@ export default function CabinsPage() {
 							</div>
 						</div>
 					</div>
+				</CabinCard>
+
+				{/* 3. Business */}
+				<CabinCard
+					title="Business Class"
+					subtitle="A350 · 777-300ER"
+					tone="business-elegant"
+				>
+					<div className="grid gap-4 sm:grid-cols-5">
+						{/* Media */}
+						<div className="sm:col-span-3">
+							<div className="relative aspect-[16/9] overflow-hidden rounded-lg bg-gradient-to-br from-teal-50 to-slate-100 ring-1 ring-inset ring-teal-200/60">
+								<Image
+									src="/images/business-class.jpg"
+									alt="Cathay Pacific Business Class cabin"
+									fill
+									sizes="(max-width: 640px) 100vw, 640px"
+									className="object-cover"
+								/>
+								{/* Subtle vignette for text legibility if needed */}
+								<div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black/5" />
+							</div>
+						</div>
+
+						{/* Content */}
+						<div className="sm:col-span-2 flex flex-col">
+							<div className="grid grid-cols-1 gap-2.5">
+								{[
+									{ t: "Direct aisle access", icon: "A" },
+									{
+										t: "Spacious reverse-herringbone",
+										icon: "↦",
+									},
+									{ t: "18–18.5″ seat width", icon: "W" },
+									{ t: "Large console storage", icon: "▦" },
+									{
+										t: "4K IFE + Bluetooth audio",
+										icon: "🎧",
+									},
+									{ t: "AC + USB-A/C power", icon: "⚡" },
+								].map((item, i) => (
+									<div
+										key={i}
+										className="flex items-center gap-3 rounded-md bg-white/70 px-3 py-2 ring-1 ring-inset ring-teal-200/60"
+									>
+										<span className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-teal-100 text-[#0d615c] ring-1 ring-inset ring-teal-300/60">
+											<span className="text-[11px] font-bold leading-none">
+												{item.icon}
+											</span>
+										</span>
+										<p className="text-sm text-teal-900/90">
+											{item.t}
+										</p>
+									</div>
+								))}
+							</div>
+
+							{/* Divider + small note */}
+							<div className="mt-3 flex items-center gap-3">
+								<div className="h-px flex-1 bg-gradient-to-r from-teal-200/60 to-transparent" />
+								<p className="text-xs text-teal-800/70">
+									A350 and 777-300ER configurations
+								</p>
+							</div>
+
+							{/* CTAs */}
+							<div className="mt-3 flex flex-wrap gap-2">
+								<button className="rounded-md bg-[#0d615c] px-3 py-2 text-xs font-semibold text-white shadow hover:bg-[#0a4f4b]">
+									Explore Business
+								</button>
+								<button className="rounded-md bg-white px-3 py-2 text-xs font-semibold text-[#0d615c] ring-1 ring-inset ring-teal-300 hover:bg-teal-50">
+									Seat map
+								</button>
+							</div>
+						</div>
+					</div>
+				</CabinCard>
+
+				{/* 4. Premium Economy */}
+				<CabinCard
+					title="Premium Economy"
+					subtitle="A350 · 777-300ER"
+					tone="prem-econ-formal"
+				>
+					<ImagePreview
+						src="/images/premium-economy.jpg"
+						alt="Cathay Pacific Premium Economy seat"
+					/>
+				</CabinCard>
+
+				{/* 5. Economy */}
+				<CabinCard
+					title="Economy"
+					subtitle="A350 · 777-300ER"
+					tone="econ-formal"
+				>
+					<ImagePreview
+						src="/images/economy.jpg"
+						alt="Cathay Pacific Economy cabin"
+					/>
 				</CabinCard>
 			</section>
 		</main>
