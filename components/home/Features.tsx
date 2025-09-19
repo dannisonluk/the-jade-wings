@@ -20,6 +20,33 @@ export default function Features() {
 					</p>
 				</div>
 
+				{/* Travel Experience Section */}
+				<div className="mb-8">
+					<h3 className="text-lg font-semibold text-[#004b47] mb-4">
+						Travel Experience
+					</h3>
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+						<FeatureCard
+							href="/lounges"
+							title="Lounge Guide"
+							body="Complete guide to Cathay Pacific lounges worldwide with amenities and access"
+							img={{
+								src: "/images/features/lounge.jpg",
+								alt: "Premium lounge interior",
+							}}
+						/>
+						<FeatureCard
+							href="/cabins"
+							title="Cabins Guide"
+							body="Learn about Cathay’s cabin options and services"
+							img={{
+								src: "/images/features/cabins.jpg",
+								alt: "First Class Cabin",
+							}}
+						/>
+					</div>
+				</div>
+
 				{/* Flight Information Section */}
 				<div className="mb-8">
 					<h3 className="text-lg font-semibold text-[#004b47] mb-4">
@@ -55,24 +82,6 @@ export default function Features() {
 					</h3>
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
 						<RouteNetworkCard isNew={true} />
-					</div>
-				</div>
-
-				{/* Travel Experience Section */}
-				<div className="mb-8">
-					<h3 className="text-lg font-semibold text-[#004b47] mb-4">
-						Travel Experience
-					</h3>
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-						<FeatureCard
-							href="/lounges"
-							title="Lounge Guide"
-							body="Complete guide to Cathay Pacific lounges worldwide with amenities and access"
-							img={{
-								src: "/images/features/lounge.jpg",
-								alt: "Premium lounge interior",
-							}}
-						/>
 					</div>
 				</div>
 

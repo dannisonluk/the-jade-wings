@@ -25,6 +25,21 @@ type NavItem =
 const NAV_ITEMS: NavItem[] = [
 	{ label: "Home", href: "/" },
 	{
+		label: "Services and Amenities",
+		children: [
+			{
+				label: "Lounge Guide",
+				href: "/lounges",
+				description: "Get the most out of your lounge visit",
+			},
+			{
+				label: "Cabin Guide",
+				href: "/cabins",
+				description: "Pick among the exception comfort",
+			},
+		],
+	},
+	{
 		label: "Flight Schedule / History / Network",
 		children: [
 			{
@@ -36,7 +51,13 @@ const NAV_ITEMS: NavItem[] = [
 				label: "Flight History",
 				href: "/flight_search",
 				description:
-					"Check aircraft type, flight history and on-time performance",
+					"Check aircraft type, flight on-time history",
+			},
+			{
+				label: "Route Visualizer",
+				href: "/route/specific_route",
+				description:
+					"Track your flight as it journeys across the globe",
 			},
 			{
 				label: "2D Route Network",
@@ -44,45 +65,35 @@ const NAV_ITEMS: NavItem[] = [
 				description: "Discover global coverage and destinations",
 			},
 			{
-				label: "3D Global - Flighty Clone",
+				label: "3D Route Network",
 				href: "/route/3d_map",
-				description: "Under development",
+				description: "Under further development",
 			},
 		],
 	},
 	{
-		label: "Services and Amenities",
-		children: [
-			{
-				label: "Lounge Guide",
-				href: "/lounges",
-				description: "Get the most out of your lounge visit",
-			},
-		],
-	},
-	{
-		label: "Playground",
+		label: "Fans & Playground",
 		children: [
 			{
 				label: "Flying Route Visualizer",
 				href: "/route/specific_route",
-				description:
-					"View the actual route of your flight",
+				description: "View the actual route of your flight",
 			},
 			{
 				label: "Chatbot about Cathay",
 				href: "/under_development",
 				description: "Under development",
 			},
-		],
-	},
-	{
-		label: "Cathay Fleet",
-		children: [
 			{
-				label: "View Fleet",
+				label: "Cathay Fleet",
 				href: "/fleet",
-				description: "Explore Cathay's specs and configurations",
+				description: "Explore fleets' specs and configurations",
+			},
+			{
+				label: "World of Airports",
+				href: "/under_development",
+				description:
+					"Celebrate HKG will be released at the end of the year!",
 			},
 		],
 	},

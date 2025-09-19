@@ -14,7 +14,7 @@ import {
 
 type Tone =
 	| "aria-noble"
-	| "first-noble" // NEW
+	| "first-noble"
 	| "first-elegant"
 	| "business-elegant"
 	| "prem-econ-formal"
