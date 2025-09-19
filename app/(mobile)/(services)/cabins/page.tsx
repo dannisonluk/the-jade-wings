@@ -14,6 +14,7 @@ import {
 
 type Tone =
 	| "aria-noble"
+	| "first-noble" // NEW
 	| "first-elegant"
 	| "business-elegant"
 	| "prem-econ-formal"
@@ -39,6 +40,12 @@ function CabinCard({
 			"shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08),0_20px_40px_-20px_rgba(3,60,56,0.6)] " +
 			"before:absolute before:inset-0 before:content-[''] before:pointer-events-none " +
 			"before:bg-[radial-gradient(120%_140%_at_10%_0%,rgba(193,163,106,0.18),transparent_40%)]",
+		"first-noble":
+			"relative overflow-hidden rounded-xl p-4 sm:p-5 text-rose-50 " +
+			"bg-gradient-to-b from-[#3a0f14] via-[#2a0e12] to-[#220c10] " +
+			"shadow-[inset_0_0_0_1px_rgba(255,255,255,0.05),0_20px_40px_-20px_rgba(58,15,20,0.6)] " +
+			"before:absolute before:inset-0 before:content-[''] before:pointer-events-none " +
+			"before:bg-[radial-gradient(120%_140%_at_12%_0%,rgba(255,220,150,0.14),transparent_45%)]",
 		"first-elegant":
 			"rounded-xl p-4 sm:p-5 bg-gradient-to-br from-[#fcfaf8] via-[#f6efea] to-white text-rose-900/90 " +
 			"ring-1 ring-inset ring-[rgba(124,29,36,0.18)] " +
@@ -62,6 +69,7 @@ function CabinCard({
 						className={[
 							"text-xl font-bold tracking-tight sm:text-2xl",
 							tone === "aria-noble" ? "text-white" : "",
+							tone === "first-noble" ? "text-rose-50" : "",
 							tone === "first-elegant" ? "text-[#5e0f14]" : "",
 							tone === "business-elegant" ? "text-[#0d615c]" : "",
 							tone === "prem-econ-formal" ? "text-[#2f3b4a]" : "",
@@ -75,6 +83,9 @@ function CabinCard({
 							className={[
 								"mt-1 text-xs font-medium",
 								tone === "aria-noble"
+									? "text-amber-100/80"
+									: "",
+								tone === "first-noble"
 									? "text-amber-100/80"
 									: "",
 								tone === "first-elegant"
@@ -284,58 +295,73 @@ export default function CabinsPage() {
 						]}
 						interval={5000}
 					/>
-
-					{/* Your Option A list (centered icon) */}
-					<ul className="mt-4 space-y-2">
-						{[
-							"Privacy and luxurious comfort",
-							"Immersive 24-inch 4K display",
-							"Bluetooth audio and wireless charging",
-							"All-in-one fingertip seat control",
-						].map((text, i) => (
-							<li
-								key={i}
-								className="group relative overflow-hidden rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 transition-colors hover:bg-white/8"
-							>
-								<div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-								<div className="flex items-center gap-3">
-									<span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-400/15 ring-1 ring-inset ring-emerald-300/30">
-										<svg
-											viewBox="0 0 20 20"
-											aria-hidden="true"
-											className="h-3.5 w-3.5 text-emerald-200"
-										>
-											<path
-												fill="currentColor"
-												d="M7.6 13.6 4.3 10.3l1.4-1.4 1.9 1.9 6-6 1.4 1.4-7.4 7.4z"
-											/>
-										</svg>
-									</span>
-									<p className="flex-1 text-[15px] leading-6 text-white/95">
-										{text}
-									</p>
-								</div>
-								<div className="pointer-events-none absolute right-2 top-1/2 hidden h-8 w-8 -translate-y-1/2 rounded-full bg-emerald-300/10 blur-md transition-opacity group-hover:block" />
-							</li>
-						))}
-					</ul>
 					{/* CTA: Explore Aria Suite */}
-					<div className="mt-4 flex flex-wrap gap-2">
-						<Link href="https://flights.cathaypacific.com/en_HK/flying-with-us/cabin-classes/business-class/the-aria-suite.html">
-							<button className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-xs font-semibold text-white ring-1 ring-inset ring-white/20 backdrop-blur hover:bg-white/15 active:bg-white/20">
-								<svg
-									viewBox="0 0 20 20"
-									aria-hidden="true"
-									className="h-3.5 w-3.5 text-emerald-200"
+					<div className="mt-4 rounded-2xl bg-white/0">
+						<div className="relative overflow-hidden rounded-xl bg-[linear-gradient(180deg,#0a4e49,rgba(8,59,55,0.94))] p-3 sm:p-4 text-teal-50 ring-1 ring-inset ring-white/10">
+							{/* subtle vignette */}
+							<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_0%_0%,rgba(255,255,255,0.06),transparent_40%)]" />
+
+							{/* Features (styled like First) */}
+							<ul className="relative space-y-2.5">
+								{[
+									"Privacy and luxurious comfort",
+									"Immersive 24-inch 4K display",
+									"Bluetooth audio and wireless charging",
+									"All-in-one fingertip seat control",
+								].map((text, i) => (
+									<li
+										key={i}
+										className="flex items-center gap-3 rounded-md bg-white/5 px-3 py-2 ring-1 ring-inset ring-white/10 backdrop-blur-sm"
+									>
+										<span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-300/20 text-emerald-100 ring-1 ring-inset ring-emerald-200/40">
+											<svg
+												viewBox="0 0 20 20"
+												aria-hidden="true"
+												className="h-3.5 w-3.5"
+											>
+												<path
+													fill="currentColor"
+													d="M7.6 13.6 4.3 10.3l1.4-1.4 1.9 1.9 6-6 1.4 1.4-7.4 7.4z"
+												/>
+											</svg>
+										</span>
+										<p className="text-sm text-teal-50/95">
+											{text}
+										</p>
+									</li>
+								))}
+							</ul>
+
+							{/* Signature block (emerald tone) */}
+							<div className="relative mt-3 rounded-lg bg-emerald-900/35 p-3 ring-1 ring-inset ring-emerald-700/50 backdrop-blur-sm">
+								<div className="flex items-start gap-3">
+									<span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-emerald-300/25 text-emerald-50 ring-1 ring-inset ring-emerald-200/50">
+										✦
+									</span>
+									<div>
+										<p className="text-sm font-semibold text-teal-50">
+											New Generation | State-of-Art
+										</p>
+										<p className="mt-0.5 text-xs text-teal-100/80">
+											Refined craftsmanship with Technology
+										</p>
+									</div>
+								</div>
+							</div>
+
+							{/* CTA row (glassy like First) */}
+							<div className="mt-3 flex flex-wrap gap-2">
+								<Link
+									href="https://flights.cathaypacific.com/en_HK/flying-with-us/cabin-classes/business-class/the-aria-suite.html"
+									target="_blank"
+									rel="noopener noreferrer"
 								>
-									<path
-										fill="currentColor"
-										d="M11.3 4.3 16 9l-4.7 4.7-1.4-1.4 2-2H4v-2h7.9l-2-2 1.4-1.4z"
-									/>
-								</svg>
-								Explore Aria Suite
-							</button>
-						</Link>
+									<button className="rounded-md bg-white/10 px-3 py-2 text-xs font-semibold text-white ring-1 ring-inset ring-white/15 hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-emerald-300/60">
+										Explore Aria Suite
+									</button>
+								</Link>
+							</div>
+						</div>
 					</div>
 				</CabinCard>
 
@@ -343,7 +369,7 @@ export default function CabinsPage() {
 				<CabinCard
 					title="First Class"
 					subtitle="Available on 777-300ER"
-					tone="first-elegant"
+					tone="first-noble"
 				>
 					<div className="grid gap-4 sm:grid-cols-5">
 						{/* Media */}
@@ -363,109 +389,120 @@ export default function CabinsPage() {
 						</div>
 
 						{/* Content */}
-						<div className="sm:col-span-2 flex flex-col">
-							<ul className="space-y-2.5">
-								{[
-									"Private and spacious suite room",
-									'Dedicated and "softest" chaise lounge',
-									"Access to Cathay's First-Class lounge",
-								].map((t, i) => (
-									<li
-										key={i}
-										className="flex items-center gap-3 rounded-md bg-white/70 px-3 py-2 ring-1 ring-inset ring-rose-200/40"
-									>
-										<span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-rose-100 text-[#5e0f14] ring-1 ring-inset ring-rose-200/70">
-											<svg
-												viewBox="0 0 20 20"
-												className="h-3.5 w-3.5"
-												aria-hidden="true"
-											>
-												<path
-													fill="currentColor"
-													d="M7.6 13.6 4.3 10.3l1.4-1.4 1.9 1.9 6-6 1.4 1.4-7.4 7.4z"
-												/>
-											</svg>
-										</span>
-										<p className="text-sm text-rose-950/90">
-											{t}
-										</p>
-									</li>
-								))}
-							</ul>
+						<div className="sm:col-span-2">
+							<div className="relative overflow-hidden rounded-xl bg-[linear-gradient(180deg,#2a0e12,rgba(42,14,18,0.94))] p-3 sm:p-4 text-rose-50 ring-1 ring-inset ring-rose-900/40">
+								{/* subtle vignette */}
+								<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_0%_0%,rgba(255,255,255,0.06),transparent_40%)]" />
 
-							{/* Signature service */}
-							<div className="mt-3 rounded-lg bg-gradient-to-br from-[#fff9f3] to-white p-3 ring-1 ring-inset ring-amber-900/10">
-								<div className="flex items-start gap-3">
-									<span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-amber-100 text-amber-900 ring-1 ring-inset ring-amber-200">
-										✦
-									</span>
-									<div>
-										<p className="text-sm font-semibold text-[#5e0f14]">
-											Signature First dining
-										</p>
-										<p className="mt-0.5 text-xs text-rose-900/80">
-											Restaurant-quality menus and curated
-											wine list.
-										</p>
+								{/* Features */}
+								<ul className="relative space-y-2.5">
+									{[
+										"Private and spacious suite room",
+										'Dedicated and "softest" chaise lounge',
+										"Access to Cathay's First-Class lounge",
+									].map((t, i) => (
+										<li
+											key={i}
+											className="flex items-center gap-3 rounded-md bg-white/5 px-3 py-2 ring-1 ring-inset ring-white/10 backdrop-blur-sm"
+										>
+											<span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-rose-300/20 text-rose-100 ring-1 ring-inset ring-rose-200/40">
+												<svg
+													viewBox="0 0 20 20"
+													className="h-3.5 w-3.5"
+													aria-hidden="true"
+												>
+													<path
+														fill="currentColor"
+														d="M7.6 13.6 4.3 10.3l1.4-1.4 1.9 1.9 6-6 1.4 1.4-7.4 7.4z"
+													/>
+												</svg>
+											</span>
+											<p className="text-sm text-rose-50/95">
+												{t}
+											</p>
+										</li>
+									))}
+								</ul>
+
+								{/* Signature service */}
+								<div className="relative mt-3 rounded-lg bg-rose-900/40 p-3 ring-1 ring-inset ring-rose-700/50 backdrop-blur-sm">
+									<div className="flex items-start gap-3">
+										<span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-amber-300/25 text-amber-100 ring-1 ring-inset ring-amber-200/50">
+											✦
+										</span>
+										<div>
+											<p className="text-sm font-semibold text-rose-50">
+												Signature First dining
+											</p>
+											<p className="mt-0.5 text-xs text-rose-100/80">
+												Restaurant-quality menus and
+												curated wine list.
+											</p>
+										</div>
 									</div>
 								</div>
-							</div>
 
-							{/* CTAs */}
-							<div className="mt-3 flex flex-wrap gap-2">
-								<Link href="https://flights.cathaypacific.com/en_HK/flying-with-us/cabin-classes/first-class.html">
-									<button className="rounded-md bg-[#5e0f14] px-3 py-2 text-xs font-semibold text-white shadow hover:bg-[#4d0c11]">
-										Explore First
-									</button>
-								</Link>
-
-								<Dialog>
-									<DialogTrigger asChild>
-										<button className="rounded-md bg-white px-3 py-2 text-xs font-semibold text-[#5e0f14] ring-1 ring-inset ring-rose-300 hover:bg-rose-50">
-											Seat map
+								{/* CTAs */}
+								<div className="mt-3 flex flex-wrap gap-2">
+									<Link
+										href="https://flights.cathaypacific.com/en_HK/flying-with-us/cabin-classes/first-class.html"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										<button className="rounded-md bg-[#5e0f14] px-3 py-2 text-xs font-semibold text-white shadow hover:bg-[#4d0c11] focus:outline-none focus:ring-2 focus:ring-rose-300/60">
+											Explore First
 										</button>
-									</DialogTrigger>
+									</Link>
 
-									<DialogContent className="max-w-[92vw] sm:max-w-[520px] md:max-w-[640px] p-4 sm:p-6 z-1000000001 gap-2">
-										<DialogHeader className="text-left">
-											<DialogTitle className="text-[#5e0f14]">
-												First Class Seat-map
-											</DialogTitle>
-										</DialogHeader>
-										{/* Recommendation banner */}
-										<div className="rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-900 ring-1 ring-inset ring-amber-200">
-											<p className="font-semibold">
-												Recommendation
-											</p>
-											<ul className="mt-1 list-disc pl-5">
-												<li>
-													Seat A: Best for single
-													travellers
-												</li>
-												<li>
-													Seats D & K: Best for pair
-													travellers
-												</li>
-											</ul>
-										</div>
+									<Dialog>
+										<DialogTrigger asChild>
+											<button className="rounded-md bg-white/10 px-3 py-2 text-xs font-semibold text-rose-50 ring-1 ring-inset ring-white/15 hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-rose-300/60">
+												Seat map
+											</button>
+										</DialogTrigger>
 
-										{/* Image container with hover zoom on desktop */}
-										<div className="overflow-hidden rounded-lg ring-1 ring-inset ring-rose-200/50">
-											<div className="relative max-h-[70vh] w-full overflow-auto bg-white">
-												<div className="group relative mx-auto w-[900px] max-w-full">
-													<Image
-														src="/images/cabin/first/seating-recommendation.png"
-														alt="Cathay Pacific 777-300ER First Class seat map"
-														width={1500}
-														height={2200}
-														className="h-auto w-full transition-transform duration-300 group-hover:scale-[1.025]"
-														priority
-													/>
+										<DialogContent className="max-w-[92vw] sm:max-w-[520px] md:max-w-[640px] p-4 sm:p-6 z-[100] gap-2">
+											<DialogHeader className="text-left">
+												<DialogTitle className="text-[#5e0f14]">
+													First Class Seat‑map
+												</DialogTitle>
+											</DialogHeader>
+
+											{/* Recommendation banner (light-on-dark harmony) */}
+											<div className="rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-900 ring-1 ring-inset ring-amber-200">
+												<p className="font-semibold">
+													Recommendation
+												</p>
+												<ul className="mt-1 list-disc pl-5">
+													<li>
+														Seat A: Best for single
+														travellers
+													</li>
+													<li>
+														Seats D & K: Best for
+														pair travellers
+													</li>
+												</ul>
+											</div>
+
+											{/* Image */}
+											<div className="overflow-hidden rounded-lg ring-1 ring-inset ring-rose-200/50">
+												<div className="relative max-h-[70vh] w-full overflow-auto bg-white">
+													<div className="group relative mx-auto w-[900px] max-w-full">
+														<Image
+															src="/images/cabin/first/seating-recommendation.png"
+															alt="Cathay Pacific 777-300ER First Class seat map"
+															width={1500}
+															height={2200}
+															className="h-auto w-full transition-transform duration-300 group-hover:scale-[1.025]"
+															priority
+														/>
+													</div>
 												</div>
 											</div>
-										</div>
-									</DialogContent>
-								</Dialog>
+										</DialogContent>
+									</Dialog>
+								</div>
 							</div>
 						</div>
 					</div>
