@@ -54,21 +54,10 @@ const NAV_ITEMS: NavItem[] = [
 					"Check aircraft type, flight on-time history",
 			},
 			{
-				label: "Route Visualizer",
-				href: "/route/specific_route",
-				description:
-					"Track your flight as it journeys across the globe",
-			},
-			{
 				label: "2D Route Network",
 				href: "/route/2d_map",
 				description: "Discover global coverage and destinations",
-			},
-			{
-				label: "3D Route Network",
-				href: "/route/3d_map",
-				description: "Under further development",
-			},
+			}
 		],
 	},
 	{
@@ -80,20 +69,25 @@ const NAV_ITEMS: NavItem[] = [
 				description: "View the actual route of your flight",
 			},
 			{
-				label: "Chatbot about Cathay",
-				href: "/under_development",
-				description: "Under development",
-			},
-			{
 				label: "Cathay Fleet",
 				href: "/fleet",
 				description: "Explore fleets' specs and configurations",
 			},
 			{
+				label: "3D Route Network",
+				href: "/route/3d_map",
+				description: "Under further development",
+			},
+			{
+				label: "Chatbot about Cathay",
+				href: "/under_development",
+				description: "Under development",
+			},
+			{
 				label: "World of Airports",
 				href: "/under_development",
 				description:
-					"Celebrate HKG will be released at the end of the year!",
+					"HKG airport will be released at the end of 2025",
 			},
 		],
 	},

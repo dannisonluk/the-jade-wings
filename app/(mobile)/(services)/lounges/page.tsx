@@ -114,8 +114,9 @@ export default function LoungesPage() {
 					</h2>
 					<div className=" mb-2 bg-emerald-100 border-l-4 border-emerald-500 text-emerald-800 text-sm rounded-md p-3 mt-3 shadow-sm">
 						<span>
-							Click and explore the{" "}
-							<span className="font-bold">2 categories</span>{" "}
+							<span className="font-bold">
+								Click and explore the 2 categories
+							</span>{" "}
 							below to learn more about Cathay&apos;s exclusive
 							lounges.
 						</span>

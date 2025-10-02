@@ -877,15 +877,15 @@ export default function FlightPlayback() {
 				)}
 
 				{/* Controls row - always shown */}
-				<div className="flex items-center gap-3">
+				<div className="flex items-center gap-2">
 					{/* Toggle button */}
 					<button
 						onClick={() => setShowSelectors(!showSelectors)}
 						className="h-9 w-9 rounded-md text-white/90 border transition-all hover:bg-[#1B2336] flex items-center justify-center"
 						style={{
 							background: showSelectors
-								? COLORS.accent
-								: "#0F1726",
+								? "#0F1726"
+								: COLORS.accent,
 							borderColor: showSelectors
 								? COLORS.accent
 								: "#1B2336",
@@ -899,7 +899,7 @@ export default function FlightPlayback() {
 							height="20"
 							viewBox="0 0 24 24"
 							fill="none"
-							stroke={showSelectors ? "#1A1F2B" : "currentColor"}
+							stroke={showSelectors ? "currentColor": "#1A1F2B"}
 							strokeWidth="2"
 							strokeLinecap="round"
 							strokeLinejoin="round"
@@ -923,7 +923,7 @@ export default function FlightPlayback() {
 					<button
 						onClick={playing ? handlePause : handlePlay}
 						disabled={track.length === 0}
-						className="h-9 px-5 rounded-md text-white text-sm font-medium transition-all disabled:opacity-50 hover:opacity-90"
+						className="h-9 px-5 rounded-md w-18 text-white text-sm font-medium transition-all disabled:opacity-50 hover:opacity-90 flex items-center justify-center"
 						style={{ background: COLORS.primary }}
 					>
 						{playing ? "Pause" : "Play"}
