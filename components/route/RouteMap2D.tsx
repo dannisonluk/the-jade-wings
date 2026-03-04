@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback } from "react";
 import {
 	MapsComponent,
 	LayersDirective,
@@ -31,7 +31,8 @@ import { routes } from "@/db/ts/map/routes";
 // Map your exact country strings -> ISO 3166-1 alpha-2 (lowercase for flag-icons)
 const COUNTRY_TO_ISO2: Record<string, string> = {
 	China: "cn",
-	"Taiwan, China": "xx",
+	Taiwan: "tw",
+	"Taiwan, China": "tw",
 	"South Africa": "za",
 	Canada: "ca",
 	USA: "us",
@@ -79,6 +80,11 @@ function toIso2(country: string): string | undefined {
 }
 
 export default function RouteMap() {
+	const airportByCode = useMemo(
+		() => new Map(airports.map((airport) => [airport.code, airport])),
+		[]
+	);
+
 	// Build markers with iso2 for flag-icons
 	const markers = useMemo<AirportMarker[]>(
 		() =>
@@ -99,8 +105,8 @@ export default function RouteMap() {
 		() =>
 			routes
 				.map((r) => {
-					const from = airports.find((a) => a.code === r[0]);
-					const to = airports.find((a) => a.code === r[1]);
+					const from = airportByCode.get(r[0]);
+					const to = airportByCode.get(r[1]);
 					if (!from || !to) return null;
 					const item: NavigationLineSettingsModel = {
 						visible: true,
@@ -114,7 +120,7 @@ export default function RouteMap() {
 					return item;
 				})
 				.filter((x): x is NavigationLineSettingsModel => x !== null),
-		[routes, airports]
+		[airportByCode]
 	);
 
 	// Zoom state

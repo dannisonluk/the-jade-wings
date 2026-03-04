@@ -76,18 +76,19 @@ const NAV_ITEMS: NavItem[] = [
 			{
 				label: "3D Route Network",
 				href: "/route/3d_map",
-				description: "Under further development",
+				description: "Explore Cathay's network on a 3D globe",
 			},
 			{
 				label: "Chatbot about Cathay",
 				href: "/under_development",
-				description: "Under development",
+				description:
+					"Temporarily offline due to high API and vector DB costs",
 			},
 			{
 				label: "World of Airports",
-				href: "/under_development",
+				href: "/world_of_airports",
 				description:
-					"HKG airport will be released at the end of 2025",
+					"Find HKG alliance friends and exchange game IDs",
 			},
 		],
 	},

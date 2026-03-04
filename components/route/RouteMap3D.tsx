@@ -108,7 +108,7 @@ export default function RouteMap3D() {
 				const gc = greatCircle(
 					turf.point([src.lon, src.lat]),
 					turf.point([dst.lon, dst.lat]),
-					{ npoints: 100 }
+					{ npoints: 100 },
 				);
 
 				features.push({
@@ -200,24 +200,24 @@ export default function RouteMap3D() {
 										const coords = route.geometry
 											.coordinates as number[][];
 										const idx = Math.floor(
-											progress * (coords.length - 1)
+											progress * (coords.length - 1),
 										);
 										const [lon, lat] = coords[idx];
 										const pos =
 											mapboxgl.MercatorCoordinate.fromLngLat(
 												{ lon, lat },
-												0
+												0,
 											);
 										airplane.position.set(
 											pos.x,
 											pos.y,
-											pos.z || 0
+											pos.z || 0,
 										);
 										progress += 0.002;
 									}
 								});
 							}
-						}
+						},
 					);
 
 					(this as any).scene = scene;
@@ -230,7 +230,7 @@ export default function RouteMap3D() {
 					(this as any).renderer.state.reset();
 					(this as any).renderer.render(
 						(this as any).scene,
-						(this as any).camera
+						(this as any).camera,
 					);
 					map.triggerRepaint();
 				},

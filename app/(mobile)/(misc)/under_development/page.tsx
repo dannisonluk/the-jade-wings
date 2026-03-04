@@ -24,15 +24,22 @@ export default function UnderDevelopment() {
 					</div>
 
 					<h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[color:#0b3a3a]">
-						Page Under Development
+						AI Travel Assistant Is Offline
 					</h1>
 
 					<p className="mt-3 text-[15px] leading-relaxed text-[color:#48615a]">
-						We’re crafting this experience with care.
+						This feature has been shut down due to high API token
+						consumption.
 					</p>
 
 					<p className="mt-1 text-[15px] leading-relaxed text-[color:#48615a]">
-						Please come back later.
+						Vector database operating costs are also currently too
+						high to sustain.
+					</p>
+
+					<p className="mt-1 text-[15px] leading-relaxed text-[color:#48615a]">
+						Thank you for understanding while we evaluate a more
+						cost-efficient relaunch.
 					</p>
 
 					<div className="mt-2 flex items-center justify-center gap-3">

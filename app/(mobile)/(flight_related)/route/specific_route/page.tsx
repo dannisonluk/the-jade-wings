@@ -271,6 +271,7 @@ export default function FlightPlayback() {
 	const [error, setError] = useState<string | null>(null);
 	const [playing, setPlaying] = useState(false);
 	const [iconLoaded, setIconLoaded] = useState(false);
+	const [mapReady, setMapReady] = useState(false);
 	const [speed, setSpeed] = useState(1);
 	const [follow, setFollow] = useState(false);
 
@@ -327,7 +328,7 @@ export default function FlightPlayback() {
 		if (defaultFile) {
 			setFileName(defaultFile);
 		}
-	}, [region]); // Intentionally not including port in deps
+	}, [region, port]);
 
 	// When port changes, update file
 	useEffect(() => {
@@ -341,7 +342,7 @@ export default function FlightPlayback() {
 				setFileName(files[0]);
 			}
 		}
-	}, [port, region]); // Intentionally not including tree in deps for initial load
+	}, [port, region, tree]);
 
 	// Load file list from API (optional)
 	useEffect(() => {
@@ -374,14 +375,7 @@ export default function FlightPlayback() {
 		setIdx(0);
 		setPlaying(false);
 
-		if (!fileName || !region || !port) {
-			setError("Missing file information");
-			return;
-		}
-
-		console.log(`Attempting to load: ${filePath}`);
-
-		// First check if file exists (optional - remove if you don't have the check endpoint)
+		// First check if file exists
 		checkFileExists(filePath)
 			.then((exists) => {
 				if (!mounted) return;
@@ -402,9 +396,6 @@ export default function FlightPlayback() {
 						if (mounted) {
 							setTrack(pts);
 							setError(null);
-							console.log(
-								`Successfully loaded ${pts.length} points from ${filePath}`
-							);
 						}
 					})
 					.catch((e) => {
@@ -513,6 +504,8 @@ export default function FlightPlayback() {
 			antialias: true,
 		});
 		mapRef.current = map;
+		setMapReady(false);
+		setIconLoaded(false);
 
 		setTimeout(() => map.resize(), 0);
 		requestAnimationFrame(() => map.resize());
@@ -528,6 +521,7 @@ export default function FlightPlayback() {
 		});
 
 		map.on("load", () => {
+			setMapReady(true);
 			["flight-line", "flight-trail", "flight-point"].forEach((id) => {
 				map.addSource(id, {
 					type: "geojson",
@@ -600,6 +594,8 @@ export default function FlightPlayback() {
 
 		return () => {
 			window.removeEventListener("resize", onResize);
+			setMapReady(false);
+			setIconLoaded(false);
 			map.remove();
 		};
 	}, []);
@@ -607,7 +603,7 @@ export default function FlightPlayback() {
 	// Map updates
 	useEffect(() => {
 		const map = mapRef.current;
-		if (!map || !map.isStyleLoaded()) return;
+		if (!map || !mapReady || !map.isStyleLoaded()) return;
 
 		if (lineFC) {
 			(map.getSource("flight-line") as mapboxgl.GeoJSONSource)?.setData(
@@ -640,7 +636,7 @@ export default function FlightPlayback() {
 				});
 			}
 		}
-	}, [lineFC, trailFC, pointFC, iconLoaded, follow, idx, track]);
+	}, [lineFC, trailFC, pointFC, iconLoaded, follow, idx, track, mapReady]);
 
 	// Playback
 	useEffect(() => {
@@ -722,6 +718,21 @@ export default function FlightPlayback() {
 			className="w-full"
 			style={{ background: COLORS.bg }}
 		>
+			<section className="px-4 pt-4 pb-3">
+				<div className="rounded-xl border border-[#1B2336] bg-[#0F1726] p-4">
+					<h1 className="text-lg font-semibold text-white sm:text-xl">
+						Flight Route Visualizer
+					</h1>
+					<p className="mt-1 text-sm text-[#A7B4CC]">
+						Replay historical routes from HKG and inspect track,
+						speed and altitude details.
+					</p>
+					<div className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#2B3A57] bg-[#0B1220] px-3 py-1 text-xs text-[#D1D9E6]">
+						{originCode} to {destCode} - {flightNumber}
+					</div>
+				</div>
+			</section>
+
 			{/* Picker bar */}
 			<div
 				className="px-4 py-3"

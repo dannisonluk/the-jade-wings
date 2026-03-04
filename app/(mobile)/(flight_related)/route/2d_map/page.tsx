@@ -8,7 +8,7 @@ const RouteMap = dynamic(() => import("@/components/route/RouteMap2D"), {
 
 export default function Page() {
 	return (
-		<main className=" bg-slate-50 text-slate-900 flex flex-col">
+		<main className="bg-slate-50 text-slate-900 flex flex-col">
 			{/* Top header */}
 			<header className="relative z-[1000000000]">
 				<div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white">
@@ -21,8 +21,7 @@ export default function Page() {
 						</p>
 						<Link href="/route/3d_map">
 							<span className="mt-2 inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs sm:text-sm text-slate-700 shadow-sm">
-								Click here to try the 3D version (under
-								development)
+								Click here to try the 3D version
 							</span>
 						</Link>
 					</div>
@@ -45,26 +44,25 @@ export default function Page() {
 			{/* Content */}
 			<section className="flex-1">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 py-4 sm:py-6">
-					{/* Toolbar area (optional filters/placeholders) */}
+					{/* Toolbar area */}
 					<div className="mb-3 sm:mb-4 flex flex-wrap items-center gap-2">
 						<span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs sm:text-sm text-slate-700 shadow-sm">
 							Global network
 							<span className="inline-block h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-emerald-200"></span>
 						</span>
 						<span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs sm:text-sm text-slate-700 shadow-sm">
-							Route
-							<span className="inline-block h-2 w-2 rounded-full bg-[rgba(14,165,233,0.7)] ring-2 ring-emerald-200"></span>
+							Route line
+							<span className="inline-block h-[3px] w-6 rounded-full bg-[rgba(14,165,233,0.8)]"></span>
 						</span>
 					</div>
 
 					{/* Map card */}
 					<div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-						{/* Adjustable height: grows on larger screens, still good on mobile */}
 						<div className="h-[50vh] sm:h-[70vh] lg:h-[72vh] min-h-[420px]">
 							<RouteMap />
 						</div>
 
-						{/* Footer hint (mobile friendly) */}
+						{/* Footer hint */}
 						<div className="flex items-center justify-between gap-3 border-t border-slate-100 px-3 py-2 text-xs text-slate-500">
 							<p className="truncate">
 								Pan, zoom and tap an airport to view detailed

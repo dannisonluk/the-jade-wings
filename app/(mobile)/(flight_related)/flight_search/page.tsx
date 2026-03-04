@@ -272,7 +272,7 @@ export default function FlightSearchPage() {
 		}
 	};
 
-	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
 		if (e.key === "Enter") handleSearch();
 	};
 
@@ -392,7 +392,7 @@ export default function FlightSearchPage() {
 													e.target.value.toUpperCase()
 												)
 											}
-											onKeyPress={handleKeyPress}
+											onKeyDown={handleKeyDown}
 											className="bg-transparent border-0 text-[#0F172A] placeholder:text-[#94A3B8] focus-visible:ring-0 focus-visible:outline-none"
 											disabled={loading}
 										/>
@@ -880,7 +880,7 @@ export default function FlightSearchPage() {
 										</div>
 										<div className="flex items-center gap-2">
 											<Button className="bg-[#0F7A6C] hover:bg-[#2F8D7F] text-white shadow-sm h-9 px-3 rounded-md">
-												Component under development
+												Premium currently unavailable
 											</Button>
 											<div className="hidden sm:flex items-center text-xs text-[#64748B] gap-1">
 												<ShieldCheckIcon

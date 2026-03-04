@@ -111,6 +111,16 @@ export default function Features() {
 								alt: "Cathay aircraft parked at gate",
 							}}
 						/>
+						<FeatureCard
+							href="/world_of_airports"
+							title="World of Airports"
+							body="Connect with friends and exchange alliance IDs for HKG airport"
+							img={{
+								src: "/images/background/world_of_airports-bg.jpeg",
+								alt: "Cathay aircraft at Hong Kong International Airport",
+							}}
+							isNew={true}
+						/>
 					</div>
 				</div>
 
@@ -123,7 +133,7 @@ export default function Features() {
 						<FeatureCard
 							href="/under_development"
 							title="AI Travel Assistant"
-							body="Get instant answers about flights, bookings, and Cathay Pacific services"
+							body="Temporarily shut down due to high API token usage and vector DB operating cost"
 							img={{
 								src: "/images/features/call_center.jpg",
 								alt: "AI chatbot interface",

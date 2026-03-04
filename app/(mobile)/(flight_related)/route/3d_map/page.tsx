@@ -1,5 +1,3 @@
-// app/route/3d_map/page.tsx
-
 import RouteMap3D from "@/components/route/RouteMap3D";
 
 export default function Page() {
