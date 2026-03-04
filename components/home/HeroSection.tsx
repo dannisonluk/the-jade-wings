@@ -1,5 +1,6 @@
 import Image from "next/image";
-import background from "/public/images/home/mobile/777_takeoff.jpg";
+// import background from "/public/images/home/mobile/777_takeoff.jpg";
+import background from "/public/images/cathay-wallpaper/A350-wingtip.jpg";
 
 // components/home/HeroSection.tsx
 export default function HeroSection() {

@@ -138,7 +138,6 @@ export default function Features() {
 								src: "/images/features/call_center.jpg",
 								alt: "AI chatbot interface",
 							}}
-							isNew={true}
 							chipTone="from-purple-50 to-indigo-50"
 						/>
 					</div>
