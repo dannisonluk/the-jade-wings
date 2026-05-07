@@ -5,8 +5,13 @@ import NavBar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export default async function Home() {
+	// Middleware guarantees non-mobile users can only access this route.
+	// Root still adapts the UI between mobile and PC shells.
 	const userAgent = (await headers()).get("user-agent") || "";
-	const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(userAgent);
+	const isMobile =
+		/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(
+			userAgent,
+		);
 
 	if (isMobile) {
 		return (
