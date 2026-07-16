@@ -26,7 +26,7 @@ import "flag-icons/css/flag-icons.min.css";
 
 import * as worldMap from "@/db/json/map/world_geo.json";
 import { airports } from "@/db/ts/map/airports";
-import { routes } from "@/db/ts/map/routes";
+import type { RoutePair } from "@/lib/schedule/network";
 
 // Map your exact country strings -> ISO 3166-1 alpha-2 (lowercase for flag-icons)
 const COUNTRY_TO_ISO2: Record<string, string> = {
@@ -79,7 +79,8 @@ function toIso2(country: string): string | undefined {
 	return COUNTRY_TO_ISO2[country];
 }
 
-export default function RouteMap() {
+export default function RouteMap({ routes }: { routes: RoutePair[] }) {
+	const servedAirportCodes = useMemo(() => new Set(routes.flat()), [routes]);
 	const airportByCode = useMemo(
 		() => new Map(airports.map((airport) => [airport.code, airport])),
 		[]
@@ -88,7 +89,7 @@ export default function RouteMap() {
 	// Build markers with iso2 for flag-icons
 	const markers = useMemo<AirportMarker[]>(
 		() =>
-			airports.map((a) => ({
+			airports.filter((a) => servedAirportCodes.has(a.code)).map((a) => ({
 				latitude: a.lat,
 				longitude: a.lon,
 				code: a.code,
@@ -97,7 +98,7 @@ export default function RouteMap() {
 				country: a.country,
 				iso2: toIso2(a.country),
 			})),
-		[]
+		[servedAirportCodes]
 	);
 
 	// Build routes
@@ -120,7 +121,7 @@ export default function RouteMap() {
 					return item;
 				})
 				.filter((x): x is NavigationLineSettingsModel => x !== null),
-		[airportByCode]
+		[airportByCode, routes]
 	);
 
 	// Zoom state

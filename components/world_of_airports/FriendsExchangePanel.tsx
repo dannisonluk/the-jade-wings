@@ -22,6 +22,7 @@ const DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
 export default function FriendsExchangePanel() {
 	const [nickname, setNickname] = useState("");
 	const [gameId, setGameId] = useState("");
+	const [airportCode, setAirportCode] = useState("");
 	const [submitting, setSubmitting] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [message, setMessage] = useState<string | null>(null);
@@ -60,7 +61,7 @@ export default function FriendsExchangePanel() {
 
 	const canSubmit = useMemo(
 		() => nickname.trim().length > 0 && gameId.trim().length > 0,
-		[nickname, gameId]
+		[nickname, gameId],
 	);
 
 	const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -87,7 +88,7 @@ export default function FriendsExchangePanel() {
 			if (!res.ok) {
 				setError(
 					(payload as ApiErrorResponse).error ??
-						"Unable to save your ID right now."
+						"Unable to save your ID right now.",
 				);
 				return;
 			}
@@ -101,6 +102,7 @@ export default function FriendsExchangePanel() {
 			setMessage("Thanks! Your ID has been saved.");
 			setNickname("");
 			setGameId("");
+			setAirportCode("");
 		} catch {
 			setError("Unable to save your ID right now.");
 		} finally {
@@ -151,7 +153,24 @@ export default function FriendsExchangePanel() {
 						value={gameId}
 						onChange={(event) => setGameId(event.target.value)}
 						className="h-10 w-full rounded-md border border-slate-300 px-3 text-sm text-slate-900 outline-none ring-teal-200 transition focus:border-teal-500 focus:ring"
-						placeholder='e.g. CaptainNick'
+						placeholder="e.g. CaptainNick"
+						maxLength={48}
+					/>
+				</div>
+
+				<div className="space-y-1">
+					<label
+						htmlFor="friend-airport-code"
+						className="text-xs font-medium text-slate-700"
+					>
+						Airport Code
+					</label>
+					<input
+						id="friend-airport-code"
+						value={airportCode}
+						onChange={(event) => setAirportCode(event.target.value)}
+						className="h-10 w-full rounded-md border border-slate-300 px-3 text-sm text-slate-900 outline-none ring-teal-200 transition focus:border-teal-500 focus:ring"
+						placeholder="e.g. HKG"
 						maxLength={48}
 					/>
 				</div>
@@ -176,7 +195,7 @@ export default function FriendsExchangePanel() {
 				</p>
 			)}
 
-			<div className="mt-5">
+			{/* <div className="mt-5">
 				<h3 className="text-sm font-semibold text-slate-900">
 					Recent friend IDs
 				</h3>
@@ -209,7 +228,7 @@ export default function FriendsExchangePanel() {
 						))}
 					</div>
 				)}
-			</div>
+			</div> */}
 		</section>
 	);
 }

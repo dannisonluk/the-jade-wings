@@ -1,21 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-	variable: "--font-geist-sans",
-	subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
-	subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
 	title: "Jade Wings",
 	description:
-		"Jadewings is a fan-made Cathay-info website, including weekly flight schedules, 2‑month history with on-time performance, fleet details, coverage route map, lounge amenities and chatbots coming soon.",
+		"Jade Wings is a fan-made Cathay information website with cargo schedules, route maps, historical route visualizations, fleet details and lounge guides.",
 };
 
 export default function RootLayout({
@@ -25,11 +14,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-			>
-				{children}
-			</body>
+			<body>{children}</body>
 		</html>
 	);
 }

@@ -40,7 +40,7 @@ const NAV_ITEMS: NavItem[] = [
 		],
 	},
 	{
-		label: "Flight Schedule / History / Network",
+		label: "Flight Schedule / Network",
 		children: [
 			{
 				label: "Flight Schedule",
@@ -48,16 +48,15 @@ const NAV_ITEMS: NavItem[] = [
 				description: "Weekly schedules for all flights",
 			},
 			{
-				label: "Flight History",
-				href: "/flight_search",
-				description:
-					"Check aircraft type, flight on-time history",
-			},
-			{
 				label: "2D Route Network",
 				href: "/route/2d_map",
 				description: "Discover global coverage and destinations",
-			}
+			},
+			{
+				label: "3D Route Network",
+				href: "/route/3d_map",
+				description: "Explore the same network on a 3D globe",
+			},
 		],
 	},
 	{
@@ -72,11 +71,6 @@ const NAV_ITEMS: NavItem[] = [
 				label: "Cathay Fleet",
 				href: "/fleet",
 				description: "Explore fleets' specs and configurations",
-			},
-			{
-				label: "3D Route Network",
-				href: "/route/3d_map",
-				description: "Explore Cathay's network on a 3D globe",
 			},
 			{
 				label: "Chatbot about Cathay",

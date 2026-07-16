@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Jade Wings
 
-## Getting Started
+Fan-made Cathay information app built with Next.js 15 and React 19.
 
-First, run the development server:
+## Development
 
-```bash
+```powershell
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Quality gates:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```powershell
+npm run lint
+npx tsc --noEmit
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Structure
 
-## Learn More
+```text
+app/                 App Router pages and API routes
+components/          Feature and shared UI
+lib/schedule/        Cargo workbook parsing, validation and repository
+lib/route/           Historical track parsing
+db/route/            Runtime CSV track data
+db/json/             Small runtime JSON datasets
+public/data/         Active Cathay Cargo schedule workbook
+public/images/       Runtime images
+misc/legacy/         Disabled features and archived source data
+types/               Shared application contracts
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The schedule page, schedule API, and 2D/3D network maps all use
+`public/data/CathayCargo_Schedule_AUG2026.xlsx`. See
+`docs/flight-data-pipeline.md` before replacing or changing its schema.

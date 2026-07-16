@@ -2,17 +2,9 @@
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import { resolveWithinRoot } from "@/lib/server/safe-path";
 
 const ROOT = path.join(process.cwd(), "db", "route");
-
-function safeJoin(root: string, subpath: string) {
-	const normalized = path.normalize(subpath).replace(/^(\.\.(\/|\\|$))+/, "");
-	const fullPath = path.join(root, normalized);
-	if (!fullPath.startsWith(root)) {
-		throw new Error("Invalid path.");
-	}
-	return fullPath;
-}
 
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
@@ -26,7 +18,7 @@ export async function GET(request: Request) {
 	}
 
 	try {
-		const filePath = safeJoin(ROOT, file);
+		const filePath = resolveWithinRoot(ROOT, file);
 		let exists = true;
 		try {
 			const stat = await fs.stat(filePath);
@@ -42,7 +34,7 @@ export async function GET(request: Request) {
 		}
 		return NextResponse.json(
 			{ exists: false, error: errorMessage },
-			{ status: 500 }
+			{ status: 400 }
 		);
 	}
 }

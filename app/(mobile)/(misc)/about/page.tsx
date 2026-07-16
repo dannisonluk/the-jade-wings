@@ -53,9 +53,12 @@ export default function AboutPage() {
 					</p>
 					<ul className="list-disc pl-5 text-gray-700 space-y-1">
 						<li>
-							Flight tracking and schedule data from public
-							endpoints and services such as Flightradar24 and
-							FlightAware where permitted for non-commercial use.
+							Cargo timetable data from the published Cathay Cargo
+							schedule workbook supplied with this project.
+						</li>
+						<li>
+							Historical track data from public services such as
+							Flightradar24 where permitted for non-commercial use.
 						</li>
 						<li>
 							Publicly available airline resources and community

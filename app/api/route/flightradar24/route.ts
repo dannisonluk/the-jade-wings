@@ -2,17 +2,10 @@
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import { resolveWithinRoot } from "@/lib/server/safe-path";
 
 // Root folder where your CSVs live (db/route/...)
 const ROOT = path.join(process.cwd(), "db", "route");
-
-// Prevent path traversal like ../../
-function safeJoin(root: string, subpath: string) {
-	const normalized = path.normalize(subpath).replace(/^(\.\.(\/|\\|$))+/, "");
-	const full = path.join(root, normalized);
-	if (!full.startsWith(root)) throw new Error("Bad path");
-	return full;
-}
 
 export async function GET(req: Request) {
 	const url = new URL(req.url);
@@ -23,7 +16,7 @@ export async function GET(req: Request) {
 		if (!file.endsWith(".csv")) {
 			return new NextResponse("Invalid file type", { status: 400 });
 		}
-		const csvPath = safeJoin(ROOT, file);
+		const csvPath = resolveWithinRoot(ROOT, file);
 		const data = await fs.readFile(csvPath, "utf8");
 		return new NextResponse(data, {
 			status: 200,

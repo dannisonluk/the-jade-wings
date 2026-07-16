@@ -356,7 +356,7 @@ if (process.env.NODE_ENV === "development") {
 				console.log("Flight metadata changed, reloading...");
 				await reloadIndexes();
 			}
-		} catch (e) {
+		} catch {
 			// File might not exist yet
 		}
 	}, 5000); // Check every 5 seconds in dev mode

@@ -14,7 +14,7 @@ import { greatCircle } from "@turf/great-circle";
 import type { Feature, FeatureCollection, LineString } from "geojson";
 
 import { airports } from "@/db/ts/map/airports";
-import { routes } from "@/db/ts/map/routes";
+import type { RoutePair } from "@/lib/schedule/network";
 
 type LngLat = [number, number];
 const HK: LngLat = [114.1694, 22.3193];
@@ -59,7 +59,7 @@ function toIso2(country: string): string | undefined {
 	return COUNTRY_TO_ISO2[country];
 }
 
-export default function RouteMap3D() {
+export default function RouteMap3D({ routes }: { routes: RoutePair[] }) {
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const mapRef = useRef<Map | null>(null);
 
@@ -97,6 +97,7 @@ export default function RouteMap3D() {
 		});
 
 		map.on("load", () => {
+			const servedAirportCodes = new Set(routes.flat());
 			// ✅ Build routes
 			const features: Feature<LineString>[] = [];
 			for (const [srcCode, dstCode] of routes) {
@@ -138,7 +139,7 @@ export default function RouteMap3D() {
 			});
 
 			// ✅ Add DOM Markers for airports with flag-icons
-			airports.forEach((a) => {
+			airports.filter((a) => servedAirportCodes.has(a.code)).forEach((a) => {
 				const iso2 = toIso2(a.country);
 				const el = document.createElement("div");
 				el.style.display = "flex";
@@ -245,7 +246,7 @@ export default function RouteMap3D() {
 			window.removeEventListener("resize", onResize);
 			map.remove();
 		};
-	}, []);
+	}, [routes]);
 
 	return (
 		<div

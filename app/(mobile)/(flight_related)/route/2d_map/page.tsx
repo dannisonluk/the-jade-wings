@@ -1,12 +1,13 @@
-"use client";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 
-const RouteMap = dynamic(() => import("@/components/route/RouteMap2D"), {
-	ssr: false,
-});
+import { RouteNetwork2D } from "@/components/route/RouteNetwork2D";
+import { getScheduleRoutePairs } from "@/lib/schedule/network";
+import { getScheduleDataset } from "@/lib/schedule/repository";
 
-export default function Page() {
+export default async function Page() {
+	const dataset = await getScheduleDataset();
+	const routes = getScheduleRoutePairs(dataset.schedule);
+
 	return (
 		<main className="bg-slate-50 text-slate-900 flex flex-col">
 			{/* Top header */}
@@ -14,10 +15,10 @@ export default function Page() {
 				<div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white">
 					<div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
 						<h1 className="text-xl sm:text-2xl font-semibold tracking-tight">
-							Cathay Pacific Route Map
+							Cathay Cargo Route Map
 						</h1>
 						<p className="mt-1 text-sm text-white/90">
-							Explore connections across CX network.
+							Explore routes in the current published timetable snapshot.
 						</p>
 						<Link href="/route/3d_map">
 							<span className="mt-2 inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs sm:text-sm text-slate-700 shadow-sm">
@@ -47,7 +48,7 @@ export default function Page() {
 					{/* Toolbar area */}
 					<div className="mb-3 sm:mb-4 flex flex-wrap items-center gap-2">
 						<span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs sm:text-sm text-slate-700 shadow-sm">
-							Global network
+							Published timetable network
 							<span className="inline-block h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-emerald-200"></span>
 						</span>
 						<span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs sm:text-sm text-slate-700 shadow-sm">
@@ -59,7 +60,7 @@ export default function Page() {
 					{/* Map card */}
 					<div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
 						<div className="h-[50vh] sm:h-[70vh] lg:h-[72vh] min-h-[420px]">
-							<RouteMap />
+							<RouteNetwork2D routes={routes} />
 						</div>
 
 						{/* Footer hint */}
