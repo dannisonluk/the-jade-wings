@@ -6,6 +6,7 @@ type FriendEntry = {
 	id: string;
 	gameId: string;
 	nickname: string;
+	airportCode: string;
 	createdAt: string;
 };
 
@@ -60,8 +61,11 @@ export default function FriendsExchangePanel() {
 	}, []);
 
 	const canSubmit = useMemo(
-		() => nickname.trim().length > 0 && gameId.trim().length > 0,
-		[nickname, gameId],
+		() =>
+			nickname.trim().length > 0 &&
+			gameId.trim().length > 0 &&
+			airportCode.trim().length > 0,
+		[nickname, gameId, airportCode],
 	);
 
 	const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -79,6 +83,7 @@ export default function FriendsExchangePanel() {
 				body: JSON.stringify({
 					nickname: nickname.trim(),
 					gameId: gameId.trim(),
+					airportCode: airportCode.trim().toUpperCase(),
 				}),
 			});
 			const payload = (await res.json()) as
@@ -168,10 +173,10 @@ export default function FriendsExchangePanel() {
 					<input
 						id="friend-airport-code"
 						value={airportCode}
-						onChange={(event) => setAirportCode(event.target.value)}
+						onChange={(event) => setAirportCode(event.target.value.toUpperCase())}
 						className="h-10 w-full rounded-md border border-slate-300 px-3 text-sm text-slate-900 outline-none ring-teal-200 transition focus:border-teal-500 focus:ring"
 						placeholder="e.g. HKG"
-						maxLength={48}
+						maxLength={3}
 					/>
 				</div>
 

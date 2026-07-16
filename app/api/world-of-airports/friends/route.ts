@@ -6,6 +6,7 @@ type FriendEntry = {
 	id: string;
 	gameId: string;
 	nickname: string;
+	airportCode: string;
 	createdAt: string;
 };
 
@@ -14,6 +15,7 @@ const DATA_FILE = path.join(DATA_DIR, "friends.json");
 
 const MAX_NICKNAME_LENGTH = 32;
 const MAX_GAME_ID_LENGTH = 48;
+const AIRPORT_CODE_PATTERN = /^[A-Z]{3}$/;
 
 function normalizeInput(value: unknown): string {
 	return typeof value === "string" ? value.trim() : "";
@@ -59,8 +61,13 @@ async function readFriends(): Promise<FriendEntry[]> {
 				typeof entry.id === "string" &&
 				typeof entry.nickname === "string" &&
 				typeof entry.gameId === "string" &&
+				(typeof entry.airportCode === "undefined" ||
+					typeof entry.airportCode === "string") &&
 				typeof entry.createdAt === "string"
-		);
+		).map((entry) => ({
+			...entry,
+			airportCode: entry.airportCode ?? "",
+		}));
 	} catch {
 		return [];
 	}
@@ -89,9 +96,11 @@ export async function POST(request: Request) {
 		const payload = (await request.json()) as {
 			nickname?: unknown;
 			gameId?: unknown;
+			airportCode?: unknown;
 		};
 		const nickname = normalizeInput(payload.nickname);
 		const gameId = normalizeInput(payload.gameId);
+		const airportCode = normalizeInput(payload.airportCode).toUpperCase();
 
 		const nicknameError = validateNickname(nickname);
 		if (nicknameError) {
@@ -102,12 +111,19 @@ export async function POST(request: Request) {
 		if (gameIdError) {
 			return NextResponse.json({ error: gameIdError }, { status: 400 });
 		}
+		if (!AIRPORT_CODE_PATTERN.test(airportCode)) {
+			return NextResponse.json(
+				{ error: "Airport Code must be a three-letter IATA code." },
+				{ status: 400 },
+			);
+		}
 
 		const friends = await readFriends();
 		const newEntry: FriendEntry = {
 			id: crypto.randomUUID(),
 			nickname,
 			gameId,
+			airportCode,
 			createdAt: new Date().toISOString(),
 		};
 
