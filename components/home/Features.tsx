@@ -53,7 +53,7 @@ export default function Features() {
 						Flight Information
 					</h3>
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-						<FeatureCard
+						{/* <FeatureCard
 							href="/flight_search"
 							title="Flight Lookup"
 							body="Check your next flight's aircraft type, seat configuration and amenities"
@@ -61,7 +61,7 @@ export default function Features() {
 								src: "/images/features/flight.jpg",
 								alt: "Airplane taking off",
 							}}
-						/>
+						/> */}
 
 						<FeatureCard
 							href="/schedule"
