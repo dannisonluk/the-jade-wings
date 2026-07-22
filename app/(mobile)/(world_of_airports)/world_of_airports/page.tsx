@@ -38,8 +38,7 @@ export default function WorldOfAirportsPage() {
 							About My Fleet
 						</h2>
 						<p className="mt-2 text-sm leading-relaxed text-slate-600">
-							I am a DragonAir fan and currently operate a huge A346 and 78M fleet, plus
-							some 333 and B787 fleets. If you add your ID below,
+							I am a DragonAir fan and currently operate a huge A359/K, B789 and B78M fleet. If you add your ID below,
 							I can send my carriers to your airport too.
 						</p>
 					</div>
