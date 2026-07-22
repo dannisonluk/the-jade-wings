@@ -15,6 +15,10 @@ import {
 	MapPinned,
 	Pause,
 	Play,
+	Gauge,
+	Compass,
+	Mountain,
+	Globe,
 } from "lucide-react";
 import {
 	calculateTrackDistanceKm,
@@ -33,23 +37,20 @@ const HK: [number, number] = [114.1694, 22.3193];
 
 // UI colors
 const COLORS = {
-	primary: "#2D7FF9",
-	primaryDark: "#1B5FD9",
-	accent: "#FFD166",
-	success: "#2ED573",
-	info: "#60A5FA",
-	bg: "#0B1220",
-	card: "#121A2B",
-	muted: "#8FA0B9",
-	line: "#006564", // Cathay Pacific dark green (was #7EE1FF)
-	trail: "#FFD166",
+	primary: "#10B981", // Emerald 500
+	accent: "#F59E0B", // Amber 500
+	bg: "#0B0F17",
+	card: "#131B2E",
+	muted: "#94A3B8",
+	line: "#006564", // Cathay Pacific dark green
+	trail: "#F59E0B",
 };
 
 const MAP_VH = 52;
 const MAP_MIN = 420;
 const FRAME_RATE = 30;
 
-// Parse helpers - FIXED flight number parsing
+// Parse helpers
 const parseDateTextFromFilename = (fileName: string) => {
 	const match = fileName.match(/-\s*([0-3]?\d)([A-Za-z]{3})(20\d{2})/);
 	if (!match) return "--";
@@ -60,7 +61,6 @@ const parseDateTextFromFilename = (fileName: string) => {
 };
 
 const parseFlightNumberFromFilename = (fileName: string) => {
-	// "CX261 - 13Sep2025.csv" -> "CX261"
 	const nameWithoutExt = fileName.replace(".csv", "");
 	const parts = nameWithoutExt.split(" - ");
 	return parts[0]?.trim() || "--";
@@ -71,7 +71,7 @@ const toPath = (region: string, port: string, fileName: string) =>
 
 // Lookups
 const airportByCode = new Map<string, Airport>(
-	airports.map((a) => [a.code.toUpperCase(), a])
+	airports.map((a) => [a.code.toUpperCase(), a]),
 );
 
 // Static region/port listing
@@ -115,7 +115,6 @@ const REGION_PORTS: Record<string, string[]> = {
 	SWP: ["AKL", "BNE", "MEL", "PER", "SYD"],
 };
 
-// Default files for each region/port (add your actual files here)
 const DEFAULT_FILES: Record<string, Record<string, string>> = {
 	EUR: {
 		AMS: "CX271 - 12Sep2025.csv",
@@ -182,11 +181,10 @@ const DEFAULT_FILES: Record<string, Record<string, string>> = {
 	},
 };
 
-// Check file existence
 const checkFileExists = async (filePath: string): Promise<boolean> => {
 	try {
 		const res = await fetch(
-			`/api/route/check?file=${encodeURIComponent(filePath)}`
+			`/api/route/check?file=${encodeURIComponent(filePath)}`,
 		);
 		const data = await res.json();
 		return data.exists;
@@ -224,25 +222,25 @@ export default function FlightPlayback() {
 	// Build current file path
 	const filePath = useMemo(
 		() => toPath(region, port, fileName),
-		[region, port, fileName]
+		[region, port, fileName],
 	);
 
 	// Derive fields for UI
 	const dateText = useMemo(
 		() => parseDateTextFromFilename(fileName),
-		[fileName]
+		[fileName],
 	);
 	const destCode = useMemo(() => port.toUpperCase(), [port]);
 	const destAirport = useMemo(
 		() => airportByCode.get(destCode) || null,
-		[destCode]
+		[destCode],
 	);
 
 	const originCode = "HKG";
 	const originAirport = airportByCode.get(originCode) || null;
 	const flightNumber = useMemo(
 		() => parseFlightNumberFromFilename(fileName),
-		[fileName]
+		[fileName],
 	);
 
 	// When region changes, update port and file
@@ -258,7 +256,6 @@ export default function FlightPlayback() {
 			setPort(newPort);
 		}
 
-		// Set default file for the new region/port combination
 		const defaultFile = DEFAULT_FILES[region]?.[newPort];
 		if (defaultFile) {
 			setFileName(defaultFile);
@@ -271,7 +268,6 @@ export default function FlightPlayback() {
 		if (defaultFile) {
 			setFileName(defaultFile);
 		} else if (tree) {
-			// If we have tree data, use first available file
 			const files = tree[region]?.[port] || [];
 			if (files.length > 0) {
 				setFileName(files[0]);
@@ -279,7 +275,7 @@ export default function FlightPlayback() {
 		}
 	}, [port, region, tree]);
 
-	// Load file list from API (optional)
+	// Load file list from API
 	useEffect(() => {
 		let mounted = true;
 		const load = async () => {
@@ -291,7 +287,7 @@ export default function FlightPlayback() {
 					if (mounted) setTree(data);
 				}
 			} catch {
-				// ignore; we'll rely on manual filename
+				// Fallback silently
 			} finally {
 				if (mounted) setLoadingFiles(false);
 			}
@@ -302,7 +298,7 @@ export default function FlightPlayback() {
 		};
 	}, []);
 
-	// SINGLE CSV loading effect with file existence check
+	// CSV loading effect
 	useEffect(() => {
 		let mounted = true;
 		setError(null);
@@ -310,20 +306,17 @@ export default function FlightPlayback() {
 		setIdx(0);
 		setPlaying(false);
 
-		// First check if file exists
 		checkFileExists(filePath)
 			.then((exists) => {
 				if (!mounted) return;
 
 				if (!exists) {
 					setError(`File not found: ${filePath}`);
-					console.error(`File does not exist: ${filePath}`);
 					return;
 				}
 
-				// File exists, proceed to load
 				const url = `/api/route/flightradar24?file=${encodeURIComponent(
-					filePath
+					filePath,
 				)}`;
 
 				loadTrackCsv(url)
@@ -336,7 +329,6 @@ export default function FlightPlayback() {
 					.catch((e) => {
 						if (mounted) {
 							setError(`Failed to parse CSV: ${e.message}`);
-							console.error(`Failed to parse ${filePath}:`, e);
 						}
 					});
 			})
@@ -394,7 +386,8 @@ export default function FlightPlayback() {
 		const i = Math.min(idx, track.length - 1);
 		if (track[i].dir !== undefined) return track[i].dir!;
 		if (i > 0) return computeTrackBearing(track[i - 1], track[i]);
-		if (i < track.length - 1) return computeTrackBearing(track[i], track[i + 1]);
+		if (i < track.length - 1)
+			return computeTrackBearing(track[i], track[i + 1]);
 		return 0;
 	}, [track, idx]);
 
@@ -425,7 +418,6 @@ export default function FlightPlayback() {
 
 		const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 		if (!token) {
-			console.error("Missing NEXT_PUBLIC_MAPBOX_TOKEN");
 			setMapError("Map configuration is unavailable.");
 			return;
 		}
@@ -544,7 +536,7 @@ export default function FlightPlayback() {
 
 		if (lineFC) {
 			(map.getSource("flight-line") as mapboxgl.GeoJSONSource)?.setData(
-				lineFC
+				lineFC,
 			);
 			if (idx === 0) {
 				const bbox = turf.bbox(lineFC.features[0]);
@@ -556,12 +548,12 @@ export default function FlightPlayback() {
 		}
 		if (trailFC) {
 			(map.getSource("flight-trail") as mapboxgl.GeoJSONSource)?.setData(
-				trailFC
+				trailFC,
 			);
 		}
 		if (pointFC && iconLoaded) {
 			(map.getSource("flight-point") as mapboxgl.GeoJSONSource)?.setData(
-				pointFC
+				pointFC,
 			);
 			if (follow && track.length > 0) {
 				const i = Math.min(idx, track.length - 1);
@@ -575,7 +567,7 @@ export default function FlightPlayback() {
 		}
 	}, [lineFC, trailFC, pointFC, iconLoaded, follow, idx, track, mapReady]);
 
-	// Playback
+	// Playback animation loop
 	useEffect(() => {
 		if (!playing || track.length === 0) return;
 
@@ -606,7 +598,7 @@ export default function FlightPlayback() {
 		};
 	}, [playing, track.length, speed]);
 
-	// Shortcuts
+	// Keyboard Shortcuts
 	useEffect(() => {
 		const handleKeyPress = (e: KeyboardEvent) => {
 			const maxIdx = Math.max(0, track.length - 1);
@@ -635,266 +627,260 @@ export default function FlightPlayback() {
 
 	const handlePause = useCallback(() => setPlaying(false), []);
 
-	// Current data
 	const currentPoint = track[Math.min(idx, Math.max(0, track.length - 1))];
 	const progressPct = track.length
 		? (idx / Math.max(1, track.length - 1)) * 100
 		: 0;
 
-	// UI helpers
 	const regionOptions = Object.keys(REGION_PORTS);
 	const portOptions = REGION_PORTS[region] ?? [];
 
 	const filesForPort = useMemo(() => {
-		if (!tree) return []; // if no API, leave empty; user can type fileName
+		if (!tree) return [];
 		return tree[region]?.[port] || [];
 	}, [tree, region, port]);
 
 	return (
-		<div
-			className="w-full"
-			style={{ background: COLORS.bg }}
-		>
-			<section className="border-b border-[#1B2336] bg-[#0F1726] px-4 py-6">
-				<div className="mx-auto flex max-w-6xl flex-col justify-between gap-4 sm:flex-row sm:items-end">
+		<div className="w-full bg-[#0B0F17] text-slate-100 font-sans shadow-2xl">
+			{/* Top Header - Left Aligned Route Info */}
+			<header className="border-b border-slate-800/80 bg-[#0F1726]/90 px-4 py-3.5">
+				<div className="mx-auto flex max-w-7xl flex-col gap-2.5">
 					<div>
-						<p className="text-xs font-semibold uppercase text-[#7ED7CF]">Historical track</p>
-						<h1 className="mt-1 text-2xl font-semibold text-white sm:text-3xl">
-							Flight route visualizer
+						<div className="flex items-center gap-2">
+							<span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+							<p className="text-[11px] font-bold uppercase tracking-wider text-emerald-400">
+								Historical Track
+							</p>
+						</div>
+						<h1 className="mt-0.5 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+							Flight Route Visualizer
 						</h1>
 					</div>
+
+					{/* Moved Route Info Flush Left */}
 					<div className="flex items-center gap-3 text-white">
-						<div className="text-right">
-							<p className="text-xs text-[#8FA0B9]">{flightNumber} · {dateText}</p>
-							<p className="text-lg font-semibold">{originCode} <span className="text-[#8FA0B9]">to</span> {destCode}</p>
+						<div className="text-left">
+							<p className="text-xs font-medium text-slate-400">
+								{flightNumber}{" "}
+								<span className="mx-1 text-slate-600">•</span>{" "}
+								{dateText}
+							</p>
+							<p className="text-base font-bold tracking-wide text-white">
+								{originCode}{" "}
+								<span className="text-xs text-emerald-400 font-normal px-1">
+									➔
+								</span>{" "}
+								{destCode}
+							</p>
 						</div>
-						<span className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-[#006564]">
-							<MapPinned className="h-5 w-5" aria-hidden="true" />
-						</span>
+						<div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+							<MapPinned
+								className="h-4.5 w-4.5"
+								aria-hidden="true"
+							/>
+						</div>
 					</div>
 				</div>
-			</section>
+			</header>
 
-			{/* Picker bar */}
-			<div
-				className="px-4 py-3"
-				style={{
-					background: COLORS.card,
-					borderBottom: "1px solid #1B2336",
-				}}
-			>
-				{/* Selectors row - conditionally shown */}
-				{showSelectors && (
-					<div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
-						<div className="flex min-w-0 flex-col">
-							<label
-								className="text-xs mb-1"
-								style={{ color: COLORS.muted }}
-							>
-								Region
-							</label>
-							<select
-								value={region}
-								onChange={(e) => setRegion(e.target.value)}
-								className="h-10 w-full rounded-md border bg-[#0F1726] px-3 text-white"
-								style={{ borderColor: "#1B2336" }}
-							>
-								{regionOptions.map((r) => (
-									<option
-										key={r}
-										value={r}
-									>
-										{r}
-									</option>
-								))}
-							</select>
-						</div>
-
-						<div className="flex min-w-0 flex-col">
-							<label
-								className="text-xs mb-1"
-								style={{ color: COLORS.muted }}
-							>
-								Port
-							</label>
-							<select
-								value={port}
-								onChange={(e) => setPort(e.target.value)}
-								className="h-10 w-full rounded-md border bg-[#0F1726] px-3 text-white"
-								style={{ borderColor: "#1B2336" }}
-							>
-								{portOptions.map((p) => (
-									<option
-										key={p}
-										value={p}
-									>
-										{p}
-									</option>
-								))}
-							</select>
-						</div>
-
-						<div className="col-span-2 flex min-w-0 flex-col sm:col-span-1">
-							<label
-								className="text-xs mb-1"
-								style={{ color: COLORS.muted }}
-							>
-								Flight Number
-							</label>
-							{filesForPort.length > 0 ? (
-								<div className="relative w-full">
+			{/* Main Interactive Controls */}
+			<div className="border-b border-slate-800/80 bg-[#0B0F17] px-4 py-3">
+				<div className="mx-auto max-w-7xl flex flex-col gap-3">
+					{/* Selectors Row */}
+					{showSelectors && (
+						<div className="grid grid-cols-2 gap-3">
+							{/* Region */}
+							<div className="flex flex-col gap-1">
+								<label className="text-xs font-medium text-slate-400">
+									Region
+								</label>
+								<div className="relative">
 									<select
-										value={fileName}
+										value={region}
 										onChange={(e) =>
-											setFileName(e.target.value)
+											setRegion(e.target.value)
 										}
-										className="h-10 w-full cursor-pointer rounded-md border bg-[#0F1726] px-3 pr-8 text-white opacity-0"
-										style={{ borderColor: "#1B2336" }}
+										className="h-10 w-full appearance-none rounded-lg border border-slate-700/60 bg-[#0F1726] px-3 pr-8 text-sm font-medium text-slate-200 transition-all focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
 									>
-										{filesForPort.map((f) => (
+										{regionOptions.map((r) => (
 											<option
-												key={f}
-												value={f}
+												key={r}
+												value={r}
 											>
-												{parseFlightNumberFromFilename(
-													f
-												)}
+												{r}
 											</option>
 										))}
 									</select>
-									<div
-										className="pointer-events-none absolute inset-0 flex h-10 items-center rounded-md border bg-[#0F1726] px-3 text-white"
-										style={{ borderColor: "#1B2336" }}
-									>
-										{parseFlightNumberFromFilename(
-											fileName
-										)}
-										<ChevronDown className="ml-auto h-4 w-4" aria-hidden="true" />
-									</div>
+									<ChevronDown className="pointer-events-none absolute right-3 top-3 h-4 w-4 text-slate-400" />
 								</div>
-							) : (
-								<input
-									value={parseFlightNumberFromFilename(
-										fileName
-									)}
-									onChange={(e) => {
-										const dateMatch =
-											fileName.match(/-\s*(.+)$/);
-										const datePart = dateMatch
-											? dateMatch[1]
-											: "13Sep2025.csv";
-										setFileName(
-											`${e.target.value} - ${datePart}`
-										);
-									}}
-								className="h-10 w-full rounded-md border bg-[#0F1726] px-3 text-white"
-									style={{
-										borderColor: "#1B2336",
-								}}
-									placeholder="e.g. CX261"
-								/>
+							</div>
+
+							{/* Port */}
+							<div className="flex flex-col gap-1">
+								<label className="text-xs font-medium text-slate-400">
+									Port
+								</label>
+								<div className="relative">
+									<select
+										value={port}
+										onChange={(e) =>
+											setPort(e.target.value)
+										}
+										className="h-10 w-full appearance-none rounded-lg border border-slate-700/60 bg-[#0F1726] px-3 pr-8 text-sm font-medium text-slate-200 transition-all focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+									>
+										{portOptions.map((p) => (
+											<option
+												key={p}
+												value={p}
+											>
+												{p}
+											</option>
+										))}
+									</select>
+									<ChevronDown className="pointer-events-none absolute right-3 top-3 h-4 w-4 text-slate-400" />
+								</div>
+							</div>
+
+							{/* Flight Number Select/Input */}
+							<div className="col-span-2 flex flex-col gap-1">
+								<label className="text-xs font-medium text-slate-400">
+									Flight Number
+								</label>
+								{filesForPort.length > 0 ? (
+									<div className="relative">
+										<select
+											value={fileName}
+											onChange={(e) =>
+												setFileName(e.target.value)
+											}
+											className="h-10 w-full appearance-none rounded-lg border border-slate-700/60 bg-[#0F1726] px-3 pr-8 text-sm font-medium text-slate-200 transition-all focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+										>
+											{filesForPort.map((f) => (
+												<option
+													key={f}
+													value={f}
+												>
+													{parseFlightNumberFromFilename(
+														f,
+													)}
+												</option>
+											))}
+										</select>
+										<ChevronDown className="pointer-events-none absolute right-3 top-3 h-4 w-4 text-slate-400" />
+									</div>
+								) : (
+									<input
+										value={parseFlightNumberFromFilename(
+											fileName,
+										)}
+										onChange={(e) => {
+											const dateMatch =
+												fileName.match(/-\s*(.+)$/);
+											const datePart = dateMatch
+												? dateMatch[1]
+												: "13Sep2025.csv";
+											setFileName(
+												`${e.target.value} - ${datePart}`,
+											);
+										}}
+										className="h-10 w-full rounded-lg border border-slate-700/60 bg-[#0F1726] px-3 text-sm font-medium text-slate-200 transition-all placeholder:text-slate-600 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+										placeholder="e.g. CX261"
+									/>
+								)}
+							</div>
+
+							{loadingFiles && (
+								<div className="col-span-2 flex items-center gap-2 text-xs font-medium text-emerald-400">
+									<LoaderCircle className="h-3.5 w-3.5 animate-spin" />
+									<span>Loading flight tracks...</span>
+								</div>
 							)}
 						</div>
+					)}
 
-						{loadingFiles && (
-					<span
-								className="col-span-2 inline-flex items-center gap-2 text-xs sm:col-span-3"
-								style={{ color: COLORS.muted }}
-							>
-								<LoaderCircle className="h-3.5 w-3.5 animate-spin" aria-hidden="true" /> Loading tracks
-							</span>
-						)}
+					{/* ALL CONTROLS IN ONE SINGLE ROW WITH MATCHING HEIGHTS */}
+					<div className="flex flex-nowrap items-center gap-2 overflow-x-auto py-0.5">
+						{/* Toggle Drawer */}
+						<button
+							onClick={() => setShowSelectors(!showSelectors)}
+							className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-700/60 bg-[#0F1726] text-slate-300 hover:bg-slate-800 hover:text-white transition-all"
+							title={
+								showSelectors ? "Hide options" : "Show options"
+							}
+						>
+							{showSelectors ? (
+								<ChevronUp className="h-4 w-4" />
+							) : (
+								<ChevronDown className="h-4 w-4" />
+							)}
+						</button>
+
+						{/* Play/Pause Button (Height matched to h-8) */}
+						<button
+							onClick={playing ? handlePause : handlePlay}
+							disabled={track.length === 0}
+							className="flex h-8 shrink-0 items-center gap-1.5 rounded-lg bg-emerald-500 px-3 text-xs font-bold uppercase tracking-wider text-slate-950 transition-all hover:bg-emerald-400 disabled:opacity-40 shadow-sm"
+						>
+							{playing ? (
+								<Pause
+									className="h-3.5 w-3.5 fill-current"
+									aria-hidden="true"
+								/>
+							) : (
+								<Play
+									className="h-3.5 w-3.5 fill-current"
+									aria-hidden="true"
+								/>
+							)}
+							{playing ? "PAUSE" : "PLAY"}
+						</button>
+
+						{/* Speed Buttons (Height h-8) */}
+						<div className="flex h-8 shrink-0 items-center rounded-lg bg-[#0F1726] p-0.5 border border-slate-800">
+							{[1, 2, 4].map((s) => (
+								<button
+									key={s}
+									onClick={() => setSpeed(s)}
+									className={`h-7 px-2.5 text-xs font-bold rounded-md transition-all ${
+										speed === s
+											? "bg-emerald-500 text-slate-950 shadow-sm"
+											: "text-slate-400 hover:text-white"
+									}`}
+								>
+									{s}x
+								</button>
+							))}
+						</div>
+
+						{/* Follow Checkbox (Shortened label 'Follow') */}
+						<label className="flex shrink-0 cursor-pointer items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-all px-1">
+							<input
+								type="checkbox"
+								checked={follow}
+								onChange={(e) => setFollow(e.target.checked)}
+								className="h-4 w-4 rounded border-slate-600 bg-[#0F1726] text-emerald-500 focus:ring-0 focus:ring-offset-0 cursor-pointer"
+							/>
+							<span className="whitespace-nowrap">Follow</span>
+						</label>
 					</div>
-				)}
 
-				{/* Controls row - always shown */}
-				<div className="flex flex-wrap items-center gap-2">
-					{/* Toggle button */}
-					<button
-						onClick={() => setShowSelectors(!showSelectors)}
-						className="h-9 w-9 rounded-md text-white/90 border transition-all hover:bg-[#1B2336] flex items-center justify-center"
-						style={{
-							background: showSelectors
-								? "#0F1726"
-								: COLORS.accent,
-							borderColor: showSelectors
-								? COLORS.accent
-								: "#1B2336",
-						}}
-						title={
-							showSelectors ? "Hide selectors" : "Show selectors"
-						}
-					>
-						{showSelectors ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
-					</button>
-
-					{/* NO flight number display here - removed completely */}
-
-					{/* Spacer - only when selectors are shown */}
-					{showSelectors && <div className="flex-1" />}
-
-					{/* Playback controls */}
-					<button
-						onClick={playing ? handlePause : handlePlay}
-						disabled={track.length === 0}
-						className="flex h-9 min-w-24 items-center justify-center gap-2 rounded-md px-4 text-sm font-medium text-white transition-all hover:opacity-90 disabled:opacity-50"
-						style={{ background: COLORS.primary }}
-					>
-						{playing ? <Pause className="h-4 w-4" aria-hidden="true" /> : <Play className="h-4 w-4" aria-hidden="true" />}
-						{playing ? "Pause" : "Play"}
-					</button>
-
-					<label
-						className="flex items-center gap-2 text-sm"
-						style={{ color: COLORS.muted }}
-					>
+					{/* Timeline Progress Slider */}
+					<div className="pt-1 px-0.5">
 						<input
-							type="checkbox"
-							checked={follow}
-							onChange={(e) => setFollow(e.target.checked)}
-							className="rounded"
+							type="range"
+							min={0}
+							max={Math.max(0, track.length - 1)}
+							value={idx}
+							onChange={(e) => setIdx(Number(e.target.value))}
+							className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-slate-800 accent-emerald-500 focus:outline-none"
 						/>
-						Follow
-					</label>
-
-					{/* Speed controls */}
-					<div className="flex items-center gap-1">
-						{[1, 2, 4].map((s) => (
-							<button
-								key={s}
-								onClick={() => setSpeed(s)}
-								className="h-9 w-12 rounded-md text-sm font-medium border transition-all hover:opacity-90"
-								style={{
-									background:
-										speed === s ? COLORS.accent : "#0F1726",
-									color: speed === s ? "#1A1F2B" : "#E6F0FF",
-									borderColor:
-										speed === s ? COLORS.accent : "#1B2336",
-								}}
-							>
-								{s}x
-							</button>
-						))}
 					</div>
-				</div>
-
-				{/* Progress bar - always shown */}
-				<div className="mt-3">
-					<input
-						type="range"
-						min={0}
-						max={Math.max(0, track.length - 1)}
-						value={idx}
-						onChange={(e) => setIdx(Number(e.target.value))}
-						className="w-full h-2"
-						style={{ accentColor: COLORS.accent }}
-					/>
 				</div>
 			</div>
 
-			{/* Map */}
+			{/* Map Display Viewport */}
 			<div
-				className="relative w-full"
+				className="relative w-full border-b border-slate-800/80"
 				style={{
 					height: `min(${MAP_VH}vh, 700px)`,
 					minHeight: MAP_MIN,
@@ -902,174 +888,138 @@ export default function FlightPlayback() {
 			>
 				<div
 					ref={containerRef}
-					className="absolute inset-0 overflow-hidden h-full"
+					className="absolute inset-0 h-full w-full overflow-hidden"
 				/>
+
 				{mapError && (
-					<div className="absolute inset-0 z-10 flex items-center justify-center bg-[#0B1220] px-6 text-center text-sm text-white">
-						<CircleAlert className="mr-2 h-5 w-5 text-amber-300" aria-hidden="true" />
+					<div className="absolute inset-0 z-10 flex items-center justify-center bg-[#0B0F17]/90 px-6 text-center text-sm text-white backdrop-blur-sm">
+						<CircleAlert
+							className="mr-2 h-5 w-5 text-amber-400"
+							aria-hidden="true"
+						/>
 						{mapError}
 					</div>
 				)}
-				<div
-					className="absolute left-3 top-3 max-w-[calc(100%-1.5rem)] rounded-md px-3 py-1.5 text-xs font-medium"
-					style={{
-						background: "#1E2B45",
-						color: "#E6F0FF",
-						border: "1px solid #243352",
-					}}
-				>
-					{error
-						? `Error: ${error}`
-						: track.length
-						? `${track[Math.min(idx, track.length - 1)].lat.toFixed(
-								4
-						  )}, ${track[
-								Math.min(idx, track.length - 1)
-						  ].lon.toFixed(4)} • hdg ${currentBearing.toFixed(
-								0
-						  )}° • spd ${
-								track[Math.min(idx, track.length - 1)].spd ?? 0
-						  } kt • alt ${
-								track[Math.min(idx, track.length - 1)].alt ?? 0
-						  } ft`
-						: "Loading..."}
+
+				{/* Floating Telemetry HUD - Coordinates set to max 2dp */}
+				<div className="absolute left-4 top-4 z-10 flex flex-wrap items-center gap-2 rounded-xl border border-slate-800/80 bg-[#0F1726]/80 p-2 px-3.5 text-xs font-semibold text-slate-200 backdrop-blur-md shadow-xl">
+					{error ? (
+						<span className="text-rose-400">Error: {error}</span>
+					) : track.length ? (
+						<>
+							<div className="flex items-center gap-1.5 pr-2 border-r border-slate-800 text-slate-400">
+								<Globe className="h-3.5 w-3.5 text-emerald-400" />
+								<span>
+									{track[
+										Math.min(idx, track.length - 1)
+									].lat.toFixed(2)}
+									,{" "}
+									{track[
+										Math.min(idx, track.length - 1)
+									].lon.toFixed(2)}
+								</span>
+							</div>
+							<div className="flex items-center gap-1.5 px-2 border-r border-slate-800 text-slate-300">
+								<Compass className="h-3.5 w-3.5 text-amber-400" />
+								<span>{currentBearing.toFixed(0)}°</span>
+							</div>
+							<div className="flex items-center gap-1.5 px-2 border-r border-slate-800 text-slate-300">
+								<Gauge className="h-3.5 w-3.5 text-cyan-400" />
+								<span>
+									{track[Math.min(idx, track.length - 1)]
+										.spd ?? 0}{" "}
+									kt
+								</span>
+							</div>
+							<div className="flex items-center gap-1.5 pl-2 text-slate-300">
+								<Mountain className="h-3.5 w-3.5 text-indigo-400" />
+								<span>
+									{track[Math.min(idx, track.length - 1)]
+										.alt ?? 0}{" "}
+									ft
+								</span>
+							</div>
+						</>
+					) : (
+						<span className="flex items-center gap-2 text-slate-400">
+							<LoaderCircle className="h-3.5 w-3.5 animate-spin text-emerald-400" />
+							Initializing map telemetry...
+						</span>
+					)}
 				</div>
 			</div>
 
-			{/* Top info: date and simple route
-			<section
-				className="px-4 py-3"
-				style={{ background: COLORS.bg }}
-			>
-				<div className="text-white/95 text-sm">
-					Historical Flight: {dateText}
-				</div>
-				<div className="mt-1 grid grid-cols-2 gap-x-6 text-sm text-white/90">
-					<div>Origin: {originCode}</div>
-					<div>Destination: {destCode}</div>
-				</div>
-			</section> */}
-
-			{/* Bottom two cards: Flight Records (left) and Flight Details (right) */}
-			<section
-				className="px-4 pt-4 pb-4"
-				style={{ background: COLORS.bg }}
-			>
+			{/* Flight Detail Panels & Tabs */}
+			<section className="mx-auto max-w-7xl px-4 py-6">
 				<Tabs
 					defaultValue="records"
 					className="w-full"
 				>
-					<TabsList className="grid w-full grid-cols-2 bg-[#0F1726]">
+					<TabsList className="grid w-full grid-cols-2 rounded-xl bg-[#0F1726] p-1 border border-slate-800 h-auto">
 						<TabsTrigger
 							value="records"
-							className="data-[state=active]:bg-[#1B2336] data-[state=active]:!text-white text-white/70"
+							className="rounded-lg py-2.5 text-xs font-bold text-slate-400 transition-all data-[state=active]:!bg-[#1B2336] data-[state=active]:!text-emerald-400 data-[state=active]:shadow-sm"
 						>
-							Flight Records
+							Flight Overview
 						</TabsTrigger>
 						<TabsTrigger
 							value="details"
-							className="data-[state=active]:bg-[#1B2336] data-[state=active]:!text-white text-white/70"
+							className="rounded-lg py-2.5 text-xs font-bold text-slate-400 transition-all data-[state=active]:!bg-[#1B2336] data-[state=active]:!text-emerald-400 data-[state=active]:shadow-sm"
 						>
-							Flight Details
+							Telemetry Stats
 						</TabsTrigger>
 					</TabsList>
 
 					<TabsContent
 						value="records"
-						className="mt-1"
+						className="mt-4"
 					>
-						<div
-							className="rounded-xl p-4 border"
-							style={{
-								background: COLORS.card,
-								borderColor: "#1B2336",
-							}}
-						>
-							<div className="grid grid-cols-2 gap-3">
-								{/* Flight Number */}
-								<div
-									className="rounded-lg p-3"
-									style={{
-										background: "#0F1726",
-										border: "1px solid #1B2336",
-									}}
-								>
-									<div
-										className="text-[11px]"
-										style={{ color: COLORS.muted }}
-									>
+						<div className="rounded-2xl border border-slate-800/80 bg-[#0F1726]/40 p-5 backdrop-blur-sm">
+							<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+								<div className="rounded-xl border border-slate-800/80 bg-[#0B0F17] p-4">
+									<p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
 										Flight Number
-									</div>
-									<div className="text-white font-semibold text-lg">
+									</p>
+									<p className="mt-1 text-xl font-bold text-white">
 										{flightNumber || "--"}
-									</div>
+									</p>
 								</div>
 
-								{/* Date of Operation */}
-								<div
-									className="rounded-lg p-3"
-									style={{
-										background: "#0F1726",
-										border: "1px solid #1B2336",
-									}}
-								>
-									<div
-										className="text-[11px]"
-										style={{ color: COLORS.muted }}
-									>
+								<div className="rounded-xl border border-slate-800/80 bg-[#0B0F17] p-4">
+									<p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
 										Date of Operation
-									</div>
-									<div className="text-white font-semibold">
+									</p>
+									<p className="mt-1 text-base font-semibold text-white">
 										{dateText}
-									</div>
+									</p>
 								</div>
 
-								{/* Origin */}
-								<div
-									className="rounded-lg p-3"
-									style={{
-										background: "#0F1726",
-										border: "1px solid #1B2336",
-									}}
-								>
-									<div
-										className="text-[11px]"
-										style={{ color: COLORS.muted }}
-									>
+								<div className="rounded-xl border border-slate-800/80 bg-[#0B0F17] p-4">
+									<p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
 										Origin
-									</div>
-									<div className="text-white font-semibold">
+									</p>
+									<p className="mt-1 text-base font-semibold text-white">
 										{originCode}
-									</div>
-									<div className="text-white/60 text-xs mt-0.5">
+									</p>
+									<p className="text-xs text-slate-500 truncate mt-0.5">
 										{originAirport
 											? originAirport.name
 											: ""}
-									</div>
+									</p>
 								</div>
 
-								{/* Destination */}
-								<div
-									className="rounded-lg p-3"
-									style={{
-										background: "#0F1726",
-										border: "1px solid #1B2336",
-									}}
-								>
-									<div
-										className="text-[11px]"
-										style={{ color: COLORS.muted }}
-									>
+								<div className="rounded-xl border border-slate-800/80 bg-[#0B0F17] p-4">
+									<p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
 										Destination
-									</div>
-									<div className="text-white font-semibold">
+									</p>
+									<p className="mt-1 text-base font-semibold text-white">
 										{destCode}
-									</div>
-									<div className="text-white/60 text-xs mt-0.5">
+									</p>
+									<p className="text-xs text-slate-500 truncate mt-0.5">
 										{destAirport
 											? `${destAirport.city}, ${destAirport.country}`
 											: ""}
-									</div>
+									</p>
 								</div>
 							</div>
 						</div>
@@ -1079,85 +1029,53 @@ export default function FlightPlayback() {
 						value="details"
 						className="mt-4"
 					>
-						<div
-							className="rounded-xl p-4 border"
-							style={{
-								background: COLORS.card,
-								borderColor: "#1B2336",
-							}}
-						>
-							<div className="grid grid-cols-2 gap-3">
-								<div
-									className="rounded-lg p-3"
-									style={{
-										background: "#0F1726",
-										border: "1px solid #1B2336",
-									}}
-								>
-									<div
-										className="text-[11px]"
-										style={{ color: COLORS.muted }}
-									>
-										Distance
-									</div>
-									<div className="text-white font-semibold text-lg">
-										{calculateTrackDistanceKm(track).toFixed(0)}{" "}
-										km
-									</div>
+						<div className="rounded-2xl border border-slate-800/80 bg-[#0F1726]/40 p-5 backdrop-blur-sm">
+							<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+								<div className="rounded-xl border border-slate-800/80 bg-[#0B0F17] p-4">
+									<p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+										Total Distance
+									</p>
+									<p className="mt-1 text-xl font-bold text-white">
+										{calculateTrackDistanceKm(
+											track,
+										).toFixed(0)}{" "}
+										<span className="text-sm font-normal text-slate-400">
+											km
+										</span>
+									</p>
 								</div>
 
-								<div
-									className="rounded-lg p-3"
-									style={{
-										background: "#0F1726",
-										border: "1px solid #1B2336",
-									}}
-								>
-									<div
-										className="text-[11px]"
-										style={{ color: COLORS.muted }}
-									>
-										Progress
-									</div>
-									<div className="text-white font-semibold text-lg">
+								<div className="rounded-xl border border-slate-800/80 bg-[#0B0F17] p-4">
+									<p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+										Route Progress
+									</p>
+									<p className="mt-1 text-xl font-bold text-emerald-400">
 										{progressPct.toFixed(0)}%
-									</div>
+									</p>
 								</div>
 
-								<div
-									className="rounded-lg p-3"
-									style={{
-										background: "#0F1726",
-										border: "1px solid #1B2336",
-									}}
-								>
-									<div
-										className="text-[11px]"
-										style={{ color: COLORS.muted }}
-									>
+								<div className="rounded-xl border border-slate-800/80 bg-[#0B0F17] p-4">
+									<p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
 										Groundspeed
-									</div>
-									<div className="text-white font-semibold text-lg">
-										{currentPoint?.spd ?? 0} kt
-									</div>
+									</p>
+									<p className="mt-1 text-xl font-bold text-white">
+										{currentPoint?.spd ?? 0}{" "}
+										<span className="text-sm font-normal text-slate-400">
+											kt
+										</span>
+									</p>
 								</div>
 
-								<div
-									className="rounded-lg p-3"
-									style={{
-										background: "#0F1726",
-										border: "1px solid #1B2336",
-									}}
-								>
-									<div
-										className="text-[11px]"
-										style={{ color: COLORS.muted }}
-									>
+								<div className="rounded-xl border border-slate-800/80 bg-[#0B0F17] p-4">
+									<p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
 										Altitude
-									</div>
-									<div className="text-white font-semibold text-lg">
-										{currentPoint?.alt ?? 0} ft
-									</div>
+									</p>
+									<p className="mt-1 text-xl font-bold text-white">
+										{currentPoint?.alt ?? 0}{" "}
+										<span className="text-sm font-normal text-slate-400">
+											ft
+										</span>
+									</p>
 								</div>
 							</div>
 						</div>
