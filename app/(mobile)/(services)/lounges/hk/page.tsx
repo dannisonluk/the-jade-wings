@@ -15,8 +15,7 @@ type Lounge = {
 const FIRST_CLASS_LOUNGES: Lounge[] = [
 	{
 		title: "The Wing | First Class",
-		subtitle: "Temporarily Closed",
-		// subtitle: "Terminal 1, near gate 2",
+		subtitle: "Terminal 1, near gates 1-4",
 		image: "/images/lounges/hk/thewing_first.jpg",
 		alt: "The Wing | First Class Lounge",
 		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing-first.html",
@@ -28,19 +27,12 @@ const FIRST_CLASS_LOUNGES: Lounge[] = [
 		alt: "The Pier | First Class Lounge",
 		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-pier-first.html",
 	},
-	{
-		title: "The Deck | Temp. First Class",
-		subtitle: "Terminal 1, near gate 6",
-		image: "/images/lounges/hk/thedeck_business.webp",
-		alt: "The Deck | Temporarily First Class Lounge",
-		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-deck.html",
-	},
 ];
 
 const BUSINESS_LOUNGES: Lounge[] = [
 	{
 		title: "The Wing | Business Class",
-		subtitle: "Terminal 1, near gate 2",
+		subtitle: "Temporarily Closed for Renovation",
 		image: "/images/lounges/hk/thewing_business.webp",
 		alt: "The Wing | Business Class Lounge",
 		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing.html",
@@ -58,6 +50,13 @@ const BUSINESS_LOUNGES: Lounge[] = [
 		image: "/images/lounges/hk/thebridge_business.webp",
 		alt: "The Bridge | Business Class Lounge",
 		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-bridge.html",
+	},
+	{
+		title: "The Deck",
+		subtitle: "Terminal 1, near gate 6",
+		image: "/images/lounges/hk/thedeck_business.webp",
+		alt: "The Deck | Business Class Lounge",
+		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-deck.html",
 	},
 ];
 

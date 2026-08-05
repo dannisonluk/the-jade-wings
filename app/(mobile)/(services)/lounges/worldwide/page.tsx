@@ -46,7 +46,7 @@ const NORTHEAST_ASIA_LOUNGE: Lounge[] = [
 	},
 	{
 		title: "Narita, Tokyo",
-		subtitle: "New Tokyo International Airport",
+		subtitle: "Temporarily Closed for Renovation",
 		image: "https://cdn.jakartapotato.com/CathayPacificLoungeNarita/B_Seating1.jpg",
 		alt: "New Tokyo International Airport (Narita Airport)",
 		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/tokyo-nrt/cathay-pacific-lounge.html",
@@ -95,7 +95,7 @@ const EUROPE_LOUNGE: Lounge[] = [
 	{
 		title: "Paris",
 		subtitle: "Paris Charles de Gaulle Airport",
-		image: "https://efficientasianman.boardingarea.com/wp-content/uploads/2016/12/DSC08950-1024x683.jpg",
+		image: "https://www.executivetraveller.com/photos/view/size:1200,675/6941d9682938424fad2c4676dd799465-cathay-pacific-paris-cdg-lounge-1.jpg",
 		alt: "Paris Charles de Gaulle Airport",
 		link: "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/paris-cdg/cathay-pacific-lounge.html",
 	},
