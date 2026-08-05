@@ -4,61 +4,61 @@
 			"aircraftType": "Airbus A321-251NX",
 			"cpaAircraftType": "Airbus A321neo",
 			"count": 16,
-			"averageAge": 2.76
+			"averageAge": 3.7
 		},
 		{
 			"aircraftType": "Airbus A330-342",
 			"cpaAircraftType": "Airbus A330-300",
 			"count": 6,
-			"averageAge": 19.12
+			"averageAge": 19.3
 		},
 		{
 			"aircraftType": "Airbus A330-343",
 			"cpaAircraftType": "Airbus A330-300",
 			"count": 37,
-			"averageAge": 16.62
+			"averageAge": 17.5
 		},
 		{
 			"aircraftType": "Airbus A350-1041",
 			"cpaAircraftType": "Airbus A350-1000",
 			"count": 18,
-			"averageAge": 5.79
+			"averageAge": 6.7
 		},
 		{
 			"aircraftType": "Airbus A350-941",
 			"cpaAircraftType": "Airbus A350-900",
 			"count": 30,
-			"averageAge": 7.49
+			"averageAge": 8.4
 		},
 		{
 			"aircraftType": "Boeing 747-467ERF",
 			"cpaAircraftType": "Boeing 747-400",
 			"count": 6,
-			"averageAge": 16.3
+			"averageAge": 17.6
 		},
 		{
 			"aircraftType": "Boeing 747-867F",
 			"cpaAircraftType": "Boeing 747-8",
 			"count": 14,
-			"averageAge": 12.52
+			"averageAge": 13.5
 		},
 		{
 			"aircraftType": "Boeing 777-31H",
 			"cpaAircraftType": "Boeing 777-300",
 			"count": 5,
-			"averageAge": 22.88
+			"averageAge": 23.8
 		},
 		{
 			"aircraftType": "Boeing 777-367",
 			"cpaAircraftType": "Boeing 777-300",
 			"count": 12,
-			"averageAge": 24.47
+			"averageAge": 25.2
 		},
 		{
 			"aircraftType": "Boeing 777-367ER",
 			"cpaAircraftType": "Boeing 777-300ER",
 			"count": 35,
-			"averageAge": 12.76
+			"averageAge": 13.7
 		}
 	]
 }
