@@ -109,7 +109,7 @@ export function parseScheduleWorkbook(
 		issues,
 		rawRecordCount: dataRows.length,
 		sheet: sheetName,
-		title: text(rows[0]?.[10]) || "Cathay Cargo Flight Schedules",
+		title: text(rows[0]?.[10]) || "Cathay Flight Schedules",
 		schedulePeriod: text(rows[1]?.[12]),
 		dataCorrectAsOf: toHktIso(text(rows[2]?.[12])),
 		disclaimer: text(rows[4]?.[10]).replace(/^\*/, ""),

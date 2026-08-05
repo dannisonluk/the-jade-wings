@@ -202,7 +202,7 @@ export function ScheduleExplorer({ dataset }: { dataset: ScheduleDataset }) {
 						<div>
 							<p className="text-sm font-medium text-[#006564]">Cargo timetable</p>
 							<h1 className="mt-1 text-3xl font-semibold text-slate-950 sm:text-4xl">
-								Cathay Cargo flight schedule
+								Cathay Flight Schedule
 							</h1>
 							<p className="mt-2 text-sm text-slate-500">{dataset.meta.schedulePeriod}</p>
 						</div>
