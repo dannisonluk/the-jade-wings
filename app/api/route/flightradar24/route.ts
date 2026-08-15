@@ -4,8 +4,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { resolveWithinRoot } from "@/lib/server/safe-path";
 
-// Root folder where your CSVs live (db/route/...)
-const ROOT = path.join(process.cwd(), "db", "route");
+const ROOT = path.join(process.cwd(), "data", "source", "route-tracks");
 
 export async function GET(req: Request) {
 	const url = new URL(req.url);

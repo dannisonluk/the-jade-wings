@@ -4,7 +4,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { resolveWithinRoot } from "@/lib/server/safe-path";
 
-const ROOT = path.join(process.cwd(), "db", "route");
+const ROOT = path.join(process.cwd(), "data", "source", "route-tracks");
 
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);

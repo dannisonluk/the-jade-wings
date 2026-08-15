@@ -1,0 +1,28 @@
+{
+	"schedule": [
+		{
+			"origin": "HKG",
+			"destination": "BKK",
+			"pair": "HKG-BKK",
+			"region": "SEA",
+			"country": "THAILAND",
+			"city": "Bangkok",
+			"carrier": "CX",
+			"flightNumber": "617",
+			"serviceType": "PAX",
+			"direction": "EX",
+			"departureTime": "21:50:00",
+			"arrivalTime": "23:50:00",
+			"operatingDays": {
+				"sunday": false,
+				"monday": false,
+				"tuesday": false,
+				"wednesday": false,
+				"thursday": false,
+				"friday": false,
+				"saturday": false
+			},
+			"pattern": "1|2"
+		}
+	]
+}

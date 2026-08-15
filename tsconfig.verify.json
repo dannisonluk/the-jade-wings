@@ -9,11 +9,12 @@
 		"app/**/*.tsx",
 		"components/**/*.ts",
 		"components/**/*.tsx",
-		"db/**/*.ts",
+		"data/**/*.ts",
+		"features/**/*.ts",
+		"features/**/*.tsx",
+		"i18n/**/*.ts",
 		"lib/**/*.ts",
-		"lib/**/*.tsx",
-		"store/**/*.ts",
-		"types/**/*.ts"
+		"lib/**/*.tsx"
 	],
-	"exclude": ["node_modules", ".next", "misc"]
+	"exclude": ["node_modules", ".next", "archive"]
 }

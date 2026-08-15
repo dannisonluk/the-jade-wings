@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-	/* config options here */
 	images: {
-		domains: [
+		qualities: [75, 100],
+		remotePatterns: [
 			"www.cathaypacific.com",
 			"www.executivetraveller.com",
 			"www.verylvke.com",
@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
 			"efficientasianman.boardingarea.com",
 			"cdn.onemileatatime.com",
 			"www.travelweek.ca",
-		],
+		].map((hostname) => ({ protocol: "https" as const, hostname })),
 	},
 };
 

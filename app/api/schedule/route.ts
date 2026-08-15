@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { getScheduleDataset } from "@/lib/schedule/repository";
+import { getScheduleDataset } from "@/features/schedule/server/repository";
 
 export async function GET() {
 	const dataset = await getScheduleDataset();

@@ -1,0 +1,116 @@
+{
+	"lounge": [
+		{
+			"region": "HKG",
+			"city": "Hong Kong",
+			"airport": "Hong Kong International Airport",
+			"airport_code": "HKG",
+			"name": "The Pier 玉衡堂",
+			"class": "First",
+			"location": "Level 6, Terminal 1, near Gate 63",
+			"url": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-pier-first.html",
+			"opening_hours": "05:30 - Last Cathay Departure Flight (00:30-03:20)",
+			"amenities": [
+				"The Bar",
+				"The Pantry (Snack Bar)",
+				"The Retreat (Runway personal cabanas)",
+				"Shower Suites",
+				"Massage Services",
+				"The Bureau (Computer Workstations)"
+			],
+			"policy": {
+				"alcohol policy": "Alcoholic drinks are only available to passengers aged 18 years and over."
+			}
+		},
+		{
+			"region": "HKG",
+			"city": "Hong Kong",
+			"airport": "Hong Kong International Airport",
+			"airport_code": "HKG",
+			"name": "The Pier 玉衡堂",
+			"class": "Business",
+			"location": "Level 6, Terminal 1 near Gate 65",
+			"url": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing.html",
+			"opening_hours": "05:30 - 00:30",
+			"amenities": [
+				"The Noodle Bar",
+				"Coffee Cart",
+				"Teahouse",
+				"Shower Suites",
+				"Relaxation Room",
+				"The Bureau (Computer Workstations)"
+			],
+			"policy": {
+				"alcohol policy": "Alcoholic drinks are only available to passengers aged 18 years and over."
+			}
+		},
+		{
+			"region": "HKG",
+			"city": "Hong Kong",
+			"airport": "Hong Kong International Airport",
+			"airport_code": "HKG",
+			"name": "The Wing 寰宇堂",
+			"class": "Business",
+			"location": "Level 6, Terminal 1 near Gate 2",
+			"url": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing.html",
+			"opening_hours": "05:30 - 00:30",
+			"amenities": [
+				"The Noodle Bar",
+				"The Long Bar (Champagne and Wine Bar)",
+				"The Coffee Loft",
+				"Workstations with Computers and Printers"
+			],
+			"policy": {
+				"alcohol policy": "Alcoholic drinks are only available to passengers aged 18 years and over."
+			}
+		},
+		{
+			"region": "HKG",
+			"city": "Hong Kong",
+			"airport": "Hong Kong International Airport",
+			"airport_code": "HKG",
+			"name": "The Deck 玲瓏堂",
+			"class": "Business",
+			"location": "Level 7, Terminal 1 near Gate 6",
+			"url": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing.html",
+			"opening_hours": "05:30 - 00:30",
+			"amenities": [
+				"The Terrance",
+				"The Pantry (Snack Bar)",
+				"The Noodle Bar",
+				"Coffee Cart",
+				"Teahouse",
+				"Shower Suites",
+				"Relaxation Room",
+				"The Bureau (Computer Workstations)"
+			],
+			"policy": {
+				"alcohol policy": "Alcoholic drinks are only available to passengers aged 18 years and over."
+			}
+		},
+		{
+			"region": "HKG",
+			"city": "Hong Kong",
+			"airport": "Hong Kong International Airport",
+			"airport_code": "HKG",
+			"name": "The Bridge 逸連堂",
+			"class": "Business",
+			"location": "Level 6, Terminal 1 near Gate 35",
+			"url": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing.html",
+			"opening_hours": "05:30 - Last Cathay Departure Flight (00:30-03:20)",
+			"amenities": [
+				"The Terrance",
+				"The Pantry (Snack Bar)",
+				"The Noodle Bar",
+				"Coffee Cart",
+				"Teahouse",
+				"Shower Suites",
+				"Relaxation Room",
+				"The Bureau (Computer Workstations)"
+			],
+			"policy": {
+				"alcohol policy": "Alcoholic drinks are only available to passengers aged 18 years and over."
+			}
+		}
+	]
+}

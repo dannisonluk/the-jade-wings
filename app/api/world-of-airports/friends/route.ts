@@ -10,7 +10,7 @@ type FriendEntry = {
 	createdAt: string;
 };
 
-const DATA_DIR = path.join(process.cwd(), "db", "json", "world_of_airports");
+const DATA_DIR = path.join(process.cwd(), "data", "runtime", "world-of-airports");
 const DATA_FILE = path.join(DATA_DIR, "friends.json");
 
 const MAX_NICKNAME_LENGTH = 32;
@@ -61,13 +61,9 @@ async function readFriends(): Promise<FriendEntry[]> {
 				typeof entry.id === "string" &&
 				typeof entry.nickname === "string" &&
 				typeof entry.gameId === "string" &&
-				(typeof entry.airportCode === "undefined" ||
-					typeof entry.airportCode === "string") &&
-				typeof entry.createdAt === "string"
-		).map((entry) => ({
-			...entry,
-			airportCode: entry.airportCode ?? "",
-		}));
+				typeof entry.airportCode === "string" &&
+				typeof entry.createdAt === "string",
+		);
 	} catch {
 		return [];
 	}

@@ -4,7 +4,7 @@ import path from "path";
 
 type FileTree = Record<string, Record<string, string[]>>;
 
-const ROOT = path.join(process.cwd(), "db", "route");
+const ROOT = path.join(process.cwd(), "data", "source", "route-tracks");
 
 async function readDirNames(dir: string): Promise<string[]> {
 	const items = await fs.readdir(dir, { withFileTypes: true });
