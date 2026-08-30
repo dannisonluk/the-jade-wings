@@ -37,5 +37,5 @@ example `/en/schedule` and `/zh-HK/schedule`. The language selector preserves
 the current page while changing the locale.
 
 The schedule page, schedule API, and 2D/3D network maps all use
-`data/source/schedule/CathayCargo_Schedule_AUG2026.xlsx`. See
+`data/source/schedule/CathayCargo_Schedule_SEP2026.xlsx`. See
 `docs/flight-data-pipeline.md` before replacing or changing its schema.

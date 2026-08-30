@@ -4,7 +4,7 @@ import path from "path";
 import type { ScheduleDataset } from "../types";
 import { parseScheduleWorkbook } from "./workbook";
 
-const SOURCE_FILE = "CathayCargo_Schedule_AUG2026.xlsx";
+const SOURCE_FILE = "CathayCargo_Schedule_SEP2026.xlsx";
 const SOURCE_PATH = path.join(process.cwd(), "data", "source", "schedule", SOURCE_FILE);
 
 let cache: { modifiedAt: number; dataset: ScheduleDataset } | null = null;

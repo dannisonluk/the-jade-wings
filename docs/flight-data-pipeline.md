@@ -4,7 +4,7 @@
 
 The schedule and both route network views use one source:
 
-- `data/source/schedule/CathayCargo_Schedule_AUG2026.xlsx`
+- `data/source/schedule/CathayCargo_Schedule_SEP2026.xlsx`
 - worksheet: `TimeTable`
 - schedule period: 26 July 2026 to 29 August 2026
 - data correct as of: 16 July 2026 00:00 HKT
